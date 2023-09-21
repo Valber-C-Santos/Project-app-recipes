@@ -21,7 +21,7 @@ export default function Header() {
     if (location.pathname === '/meals/d+/') {
       setShowHeader(true);
       setShowProfile(true);
-      setShowSearch(false);
+      setShowSearch(true);
     }
   };
   return (
