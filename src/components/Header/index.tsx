@@ -5,6 +5,8 @@ export default function Header() {
   const [showHeader, setShowHeader] = useState(Boolean);
   const [showProfile, setShowProfile] = useState(Boolean);
   const [showSearch, setShowSearch] = useState(Boolean);
+  const [showSearchInput, setShowSearchInput] = useState(false);
+  const [inputValue, setInputValue] = useState('');
   const [title, setTitle] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
@@ -56,6 +58,15 @@ export default function Header() {
     navigate('/profile');
   }
 
+  const handleClickSearch = () => {
+    setShowSearchInput(!showSearchInput);
+    setInputValue('');
+  }
+
+  const handleInputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  }
+
   return (
     <>
     {showHeader && <header>
@@ -63,20 +74,26 @@ export default function Header() {
         data-testid="profile-top-btn"
         src="../images/profileIcon.svg"
         alt="profile icon"
-      />
-      }
+        onClick={ handleClickProfile }
+      />}
       {showSearch && <img
         data-testid="search-top-btn"
         src="../images/searchIcon.svg"
         alt="search icon"
-        onClick={ handleClickProfile }
-      />
-      }
+        onClick={ handleClickSearch }
+      />}
+      {showSearchInput
+      && <input
+        data-testid="search-input"
+        type='text'
+        value = {inputValue}
+        onChange = {handleInputChange}
+        >
+      </input>}
       <title data-testid="page-title">
         {title}
       </title>
-    </header>
-    }
+    </header>}
   </>
   );
 }
