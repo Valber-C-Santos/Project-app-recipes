@@ -10,6 +10,10 @@ export default function Header() {
   const [title, setTitle] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
+  const mealPattern = /^\/meals\/\d+\/$/;
+  const drinkPattern = /^\/drinks\/\d+\/$/;
+  const mealInProgressPattern = /^\/meals\/\d+\/in-progress$/;
+  const drinkInProgressPattern = /^\/drinks\/\d+\/in-progress$/;
   if (location.pathname === '/') setShowHeader(false);
   if (location.pathname === '/meals') {
     setShowHeader(true);
@@ -23,16 +27,10 @@ export default function Header() {
     setShowSearch(true);
     setTitle('Drinks');
   }
-  if (location.pathname === `\/meals\/\d+\/`) {
-    setShowHeader(false);
-  }
-  if (location.pathname === `\/drinks\/\d+\/`) {
-    setShowHeader(false);
-  }
-  if (location.pathname === `\/meals\/\d+\//in-progress`) {
-    setShowHeader(false);
-  }
-  if (location.pathname === `\/drinks\/\d+\//in-progress`) {
+  if (mealPattern.test(location.pathname)
+  || drinkPattern.test(location.pathname)
+  || mealInProgressPattern.test(location.pathname)
+  || drinkInProgressPattern.test(location.pathname)) {
     setShowHeader(false);
   }
   if (location.pathname === '/profile') {
@@ -56,44 +54,48 @@ export default function Header() {
 
   const handleClickProfile = () => {
     navigate('/profile');
-  }
+  };
 
   const handleClickSearch = () => {
     setShowSearchInput(!showSearchInput);
     setInputValue('');
-  }
+  };
 
   const handleInputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
-  }
+  };
 
   return (
-    <>
-    {showHeader && <header>
-      {showProfile && <img
-        data-testid="profile-top-btn"
-        src="../images/profileIcon.svg"
-        alt="profile icon"
-        onClick={ handleClickProfile }
-      />}
-      {showSearch && <img
-        data-testid="search-top-btn"
-        src="../images/searchIcon.svg"
-        alt="search icon"
-        onClick={ handleClickSearch }
-      />}
-      {showSearchInput
-      && <input
-        data-testid="search-input"
-        type='text'
-        value = {inputValue}
-        onChange = {handleInputChange}
-        >
-      </input>}
-      <title data-testid="page-title">
-        {title}
-      </title>
-    </header>}
-  </>
+    <div>
+      {showHeader && (
+        <header>
+          {showProfile && (
+            <button onClick={ handleClickProfile }>
+              <img
+                data-testid="profile-top-btn"
+                src="../images/profileIcon.svg"
+                alt="profile icon"
+              />
+            </button>)}
+          {showSearch && (
+            <button onClick={ handleClickSearch }>
+              <img
+                data-testid="search-top-btn"
+                src="../images/searchIcon.svg"
+                alt="search icon"
+              />
+            </button>)}
+          {showSearchInput
+          && <input
+            data-testid="search-input"
+            type="text"
+            value={ inputValue }
+            onChange={ handleInputChange }
+          />}
+          <title data-testid="page-title">
+            {title}
+          </title>
+        </header>)}
+    </div>
   );
 }
