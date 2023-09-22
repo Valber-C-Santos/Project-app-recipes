@@ -41,7 +41,6 @@ export default function Header() {
   const [showProfile, setShowProfile] = useState(Boolean);
   const [showSearch, setShowSearch] = useState(Boolean);
   const [showSearchInput, setShowSearchInput] = useState(false);
-  const [inputValue, setInputValue] = useState('');
   const [title, setTitle] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
@@ -95,12 +94,10 @@ export default function Header() {
 
   const handleClickSearch = () => {
     setShowSearchInput(!showSearchInput);
-    // setInputValue('');
   };
 
   const dispatch = useDispatch();
   const handleInputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-    // setInputValue(event.target.value);
     dispatch(setSearchInput(event.target.value));
   };
 
@@ -128,7 +125,6 @@ export default function Header() {
           && <input
             data-testid="search-input"
             type="text"
-            // value={ inputValue }
             onChange={ handleInputChange }
           />}
           <title data-testid="page-title">

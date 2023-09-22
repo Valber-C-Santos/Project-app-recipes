@@ -1,30 +1,31 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import FetchAPI from './FetchAPI';
+import { useLocation } from 'react-router-dom';
+import { FetchAPIFood, FetchAPIDrinks } from './FetchAPI';
 import { RootState } from './Reducers/reducers';
 
 function SearchBar() {
-  // const [searchTerm, setSearchTerm] = useState('');
   const [searchType, setSearchType] = useState('i');
   const searchTerm = useSelector((state:RootState) => state.search.searchInput);
+  const location = useLocation();
 
   const handleSearch = async () => {
     if (searchType === 'f' && searchTerm.length > 1) {
       window.alert('Your search must have only 1 (one) character');
     }
     console.log(searchType);
-    const data = await FetchAPI(searchType, searchTerm);
-    console.log(data);
+    if (location.pathname === '/meals') {
+      const data = await FetchAPIFood(searchType, searchTerm);
+      console.log(data);
+    }
+    if (location.pathname === '/drinks') {
+      const data = await FetchAPIDrinks(searchType, searchTerm);
+      console.log(data);
+    }
   };
 
   return (
     <div>
-      {/* <input
-        type="text"
-        placeholder="Search..."
-        value={ searchTerm }
-        onChange={ (e) => setSearchTerm(e.target.value) }
-      /> */}
       <label>
         <input
           data-testid="ingredient-search-radio"
