@@ -1,44 +1,35 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import profileIcon from '../../images/profileIcon.svg';
+import searchIcon from '../../images/searchIcon.svg';
 
-export default function Header() {
-  const [showHeader, setShowHeader] = useState(Boolean);
-  const [showProfile, setShowProfile] = useState(Boolean);
-  const [showSearch, setShowSearch] = useState(Boolean);
-  const location = useLocation();
-  const whichRender = () => {
-    if (location.pathname === '/') setShowHeader(false);
-    if (location.pathname === '/meals') {
-      setShowHeader(true);
-      setShowProfile(true);
-      setShowSearch(true);
-    }
-    if (location.pathname === '/drinks') {
-      setShowHeader(true);
-      setShowProfile(true);
-      setShowSearch(true);
-    }
-    if (location.pathname === '/meals/d+/') {
-      setShowHeader(true);
-      setShowProfile(true);
-      setShowSearch(true);
-    }
-  };
+type HeaderProps = {
+  title: string;
+  showSearchIcon: boolean;
+  showProfileIcon: boolean;
+};
+
+export default function Header({ title, showProfileIcon, showSearchIcon }: HeaderProps) {
+  const [showSearchInput, setShowSearchInput] = useState(false);
+
   return (
     <header>
-      <img
-        data-testid="profile-top-btn"
-        src="../images/profileIcon.svg"
-        alt="profile icon"
-      />
-      <img
-        data-testid="search-top-btn"
-        src="../images/searchIcon.svg"
-        alt="search icon"
-      />
-      <title data-testid="page-title">
-        Recipes App
-      </title>
+      <h1 data-testid="page-title">{title}</h1>
+      {showSearchIcon && (
+        <div>
+          <button onClick={ () => setShowSearchInput(!showSearchInput) }>
+            <img src={ searchIcon } alt="Pesquisar" data-testid="search-top-btn" />
+            {showSearchInput && (
+              <input type="text" placeholder="Pesquisar" data-testid="search-input" />
+            )}
+          </button>
+        </div>
+      )}
+      {showProfileIcon && (
+        <Link to="/profile">
+          <img src={ profileIcon } alt="Perfil" data-testid="profile-top-btn" />
+        </Link>
+      )}
     </header>
   );
 }
