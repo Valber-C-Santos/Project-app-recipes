@@ -29,8 +29,12 @@
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearchInput } from '../Actions/searchActions';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
+import SearchBar from '../SearchBar';
+import { RootState } from '../Reducers/reducers';
 
 export default function Header() {
   const [showHeader, setShowHeader] = useState(Boolean);
@@ -91,11 +95,13 @@ export default function Header() {
 
   const handleClickSearch = () => {
     setShowSearchInput(!showSearchInput);
-    setInputValue('');
+    // setInputValue('');
   };
 
+  const dispatch = useDispatch();
   const handleInputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+    // setInputValue(event.target.value);
+    dispatch(setSearchInput(event.target.value));
   };
 
   return (
@@ -122,13 +128,14 @@ export default function Header() {
           && <input
             data-testid="search-input"
             type="text"
-            value={ inputValue }
+            // value={ inputValue }
             onChange={ handleInputChange }
           />}
           <title data-testid="page-title">
             {title}
           </title>
         </header>)}
+      <SearchBar />
     </div>
   );
 }
