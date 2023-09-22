@@ -1,11 +1,11 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 import App from '../App';
 import Header from '../components/Header/index';
 import renderWithRouter from '../components/Helpers/renderWithRouter';
+import Login from '../components/Login';
 
 const search = 'button-search';
 const profile = 'button-profile';
@@ -13,11 +13,7 @@ const profile = 'button-profile';
 afterEach(() => vi.clearAllMocks());
 
 describe('Tests Header', async () => {
-  render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>,
-  );
+  renderWithRouter(<App />);
   const emailElem = screen.getByRole('textbox', {
     name: /e-mail:/i,
   });
@@ -39,6 +35,16 @@ describe('Tests Header', async () => {
     expect(profileIconElem).toBeInTheDocument();
     expect(searchIconElem).toBeInTheDocument();
   });
+  test('displays the header in /done-recipes', () => {
+    renderWithRouter(<Header />, { route: '/done-recipes' });
+    const profileIconElem = screen.getByTestId(profile);
+    expect(profileIconElem).toBeInTheDocument();
+  });
+  test('displays the header in /favorite-recipes', () => {
+    renderWithRouter(<Header />, { route: '/favorite-recipes' });
+    const profileIconElem = screen.getByTestId(profile);
+    expect(profileIconElem).toBeInTheDocument();
+  });
   test('displays the header in /drinks', () => {
     renderWithRouter(<Header />, { route: '/drinks' });
     const profileIconElem = screen.getByTestId(profile);
@@ -51,18 +57,27 @@ describe('Tests Header', async () => {
     const headerElem = screen.queryByRole('banner');
     expect(headerElem).not.toBeInTheDocument();
   });
-  test('handles profile click', async () => {
-    const { user } = renderWithRouter(<Header />, { route: '/profile' });
-    const profileIconElem = screen.getByTestId(profile);
-    expect(profileIconElem).toBeInTheDocument();
-  });
   test('if when click on search displays input', async () => {
-    const { user } = renderWithRouter(<Header />);
+    const { user } = renderWithRouter(<Header />, { route: '/meals' });
     const searchIconButton = screen.getByTestId(search);
     await user.click(searchIconButton);
     const inputElem = screen.getByRole('textbox');
     expect(inputElem).toBeInTheDocument();
     await user.click(searchIconButton);
     expect(inputElem).not.toBeInTheDocument();
+  });
+  test('if displayed input works', async () => {
+    const { user } = renderWithRouter(<Header />, { route: '/meals' });
+    const searchIconButton = screen.getByTestId(search);
+    await user.click(searchIconButton);
+    const inputElem = screen.getByRole('textbox');
+    expect(inputElem).toBeInTheDocument();
+    await user.type(inputElem, 'Pineapple');
+  });
+  test('handles profile click', async () => {
+    const { user } = renderWithRouter(<Header />, { route: '/meals' });
+    const profileIconElem = screen.getByTestId(profile);
+    await user.click(profileIconElem);
+    expect(profileIconElem).toBeInTheDocument();
   });
 });
