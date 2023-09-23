@@ -1,8 +1,8 @@
 const INITIAL_STATE = {
   searchResults: {
-    meals:[],
-    drinks:[],
-  }
+    meals: [],
+    drinks: [],
+  },
 };
 
 const searchResultReducer = (state = INITIAL_STATE, action:any) => {

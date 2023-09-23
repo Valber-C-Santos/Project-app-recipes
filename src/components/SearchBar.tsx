@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FetchAPIFood, FetchAPIDrinks } from './FetchAPI';
-import { RootState } from './Reducers/reducers';
 import { setSearchResults } from './Actions/searchResultActions';
 import { RecipeList } from './RecipeList';
 import { MealType, MealsType, RecipeListType } from '../type/Type';
 import { fetchDrinks, fetchFood } from './Actions/fetchAPIActions';
+import { Dispatch, RootState, store } from './Reducers/reducers';
 
 function SearchBar() {
   const [searchType, setSearchType] = useState('i');
@@ -19,8 +19,7 @@ function SearchBar() {
   // console.log(searchType);
 
   const location = useLocation();
-  const dispatch = useDispatch<ThunkDispatch<RootState, null, any>>();
-  const navigate = useNavigate();
+  const dispatch:Dispatch = useDispatch();
 
   const handleSearch = async () => {
     console.log(recipeList);
@@ -32,16 +31,17 @@ function SearchBar() {
     if (location.pathname === '/meals') {
       console.log('/meals dispatch');
 
-      await dispatch(fetchFood(searchType, searchTerm));
+      store.dispatch(fetchFood(searchType, searchTerm));
     }
     if (location.pathname === '/drinks') {
       console.log('/drinks dispatch');
-      await dispatch(fetchDrinks(searchType, searchTerm));
+
+      dispatch(fetchDrinks(searchType, searchTerm));
     }
 
-    // if ((recipeList.drinks.drinks === null) || (recipeList.food.food === null)) {
-    //   window.alert("Sorry, we haven't found any recipes for these filters");
-    // }
+    if (recipeList.data.drinks === null || recipeList.data.meals === null) {
+      window.alert("Sorry, we haven't found any recipes for these filters");
+    }
 
     console.log('handledsearch');
     // if (location.pathname === '/meals') {

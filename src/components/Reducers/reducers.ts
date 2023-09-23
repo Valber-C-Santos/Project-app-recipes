@@ -1,5 +1,6 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { composeWithDevTools } from '@redux-devtools/extension';
+import { AnyAction, createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk, { ThunkDispatch } from 'redux-thunk';
 import searchReducer from './searchReducer';
 import searchResultReducer from './searchResultReducer';
 import fetchAPIReducer from './fetchAPIReducer';
@@ -10,6 +11,11 @@ export const rootReducer = combineReducers({
   fetchAPI: fetchAPIReducer,
 });
 
-export const store = createStore(rootReducer, applyMiddleware(thunk));
+export const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk)),
+);
 
 export type RootState = ReturnType<typeof rootReducer>;
+
+export type Dispatch = ThunkDispatch<RootState, null, AnyAction>;

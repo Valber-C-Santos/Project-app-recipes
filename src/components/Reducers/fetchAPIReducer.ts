@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux';
 import {
   FETCH_FOOD_REQUEST,
   FETCH_FOOD_SUCCESS,
@@ -12,7 +13,7 @@ const INITIAL_STATE = {
   data: [],
 };
 
-const fetchAPIReducer = (state = INITIAL_STATE, action:any) => {
+const fetchAPIReducer = (state = INITIAL_STATE, action:AnyAction) => {
   switch (action.type) {
     case FETCH_FOOD_REQUEST: return {
       ...state,

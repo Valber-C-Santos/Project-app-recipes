@@ -52,7 +52,6 @@ export default function Header() {
   // console.log(showProfile);
   // console.log(showSearch);
   // console.log(showSearchInput);
-  
 
   useEffect(() => {
     if (location.pathname === '/') setShowHeader(false);
