@@ -1,8 +1,8 @@
-const initialState = {
+const INITIAL_STATE = {
   searchInput: '',
 };
 
-const searchReducer = (state = initialState, action: any) => {
+const searchReducer = (state = INITIAL_STATE, action: any) => {
   switch (action.type) {
     case 'SET_SEARCH_INPUT':
       return { ...state, searchInput: action.payload };

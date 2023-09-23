@@ -10,17 +10,18 @@ function SearchBar() {
   const location = useLocation();
 
   const handleSearch = async () => {
+    console.log(searchType);
     if (searchType === 'f' && searchTerm.length > 1) {
       window.alert('Your search must have only 1 (one) character');
+      return null;
     }
-    console.log(searchType);
     if (location.pathname === '/meals') {
       const data = await FetchAPIFood(searchType, searchTerm);
-      console.log(data);
+      console.log('data1:', data);
     }
     if (location.pathname === '/drinks') {
       const data = await FetchAPIDrinks(searchType, searchTerm);
-      console.log(data);
+      console.log('data2:', data);
     }
   };
 
