@@ -2,7 +2,6 @@ export type User = {
   email: string,
   password: string
 };
-
 export type MealType = {
   idMeal: string
   strMeal: string
