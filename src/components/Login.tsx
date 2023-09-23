@@ -15,7 +15,8 @@ function Login() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     localStorage.setItem('user', JSON.stringify({ email }));
-    navigate('/Header');
+    navigate('/meals');
+
   };
 
   function handleChange({ target }: React.ChangeEvent<HTMLInputElement>) {
