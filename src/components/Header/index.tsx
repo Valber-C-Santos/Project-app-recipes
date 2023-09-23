@@ -29,12 +29,11 @@
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setSearchInput } from '../Actions/searchActions';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import SearchBar from '../SearchBar';
-import { RootState } from '../Reducers/reducers';
 
 export default function Header() {
   const [showHeader, setShowHeader] = useState(Boolean);

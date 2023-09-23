@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FetchAPIFood, FetchAPIDrinks } from './FetchAPI';
 import { RootState } from './Reducers/reducers';
+import { setSearchResults } from './Actions/searchResultActions';
 
 function SearchBar() {
   const [searchType, setSearchType] = useState('i');
   const searchTerm = useSelector((state:RootState) => state.search.searchInput);
   const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSearch = async () => {
     console.log(searchType);
@@ -18,10 +21,20 @@ function SearchBar() {
     if (location.pathname === '/meals') {
       const data = await FetchAPIFood(searchType, searchTerm);
       console.log('data1:', data);
+      if (data && data.meals && data.meals.length === 1) {
+        const mealID = data.meals[0].idMeal;
+        navigate(`/meals/${mealID}`);
+      }
+      dispatch(setSearchResults(data));
     }
     if (location.pathname === '/drinks') {
       const data = await FetchAPIDrinks(searchType, searchTerm);
       console.log('data2:', data);
+      if (data && data.drinks && data.drinks.length === 1) {
+        const drinkID = data.drinks[0].idDrink;
+        navigate(`/drinks/${drinkID}`);
+      }
+      dispatch(setSearchResults(data));
     }
   };
 

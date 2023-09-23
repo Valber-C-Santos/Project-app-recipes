@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import App from '../App';
 import Header from '../components/Header/index';
 import renderWithRouter from '../components/Helpers/renderWithRouter';
-import Login from '../components/Login';
 import { store } from '../components/Reducers/reducers';
 
 const search = 'button-search';

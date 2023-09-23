@@ -3,7 +3,6 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { legacy_createStore as createStore } from 'redux';
 import { Provider } from 'react-redux';
-import searchReducer from '../Reducers/searchReducer';
 import { ReduxState } from '../../type/Type';
 import { rootReducer } from '../Reducers/reducers';
 

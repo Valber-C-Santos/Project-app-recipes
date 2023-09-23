@@ -1,12 +1,10 @@
 import { vi } from 'vitest';
-import { screen, waitFor } from '@testing-library/dom';
+import { screen } from '@testing-library/dom';
 import { Provider } from 'react-redux';
 import renderWithRouter from '../components/Helpers/renderWithRouter';
 import SearchBar from '../components/SearchBar';
 import Meals from '../components/Meals';
-import { FetchAPIDrinks, FetchAPIFood } from '../components/FetchAPI';
 import { store } from '../components/Reducers/reducers';
-import Header from '../components/Header';
 import Drinks from '../components/Drinks';
 import renderWithRouterAndRedux from '../components/Helpers/renderWithRouterWithRedux';
 
@@ -90,6 +88,8 @@ describe('Test search bar', () => {
     expect(firstEl).toBeInTheDocument();
   });
   test('if returns correct food search values', async () => {
+    const jsdomAlert = window.alert; // https://stackoverflow.com/questions/55088482/jest-not-implemented-window-alert
+    window.alert = () => {};
     const fetchResolvedValue = {
       json: async () => mockSearch,
     } as Response;
@@ -111,16 +111,18 @@ describe('Test search bar', () => {
     await user.type(inputEl, 'c');
     expect(inputEl).toHaveValue('c');
     await user.click(searchButtonEl);
-    console.log('alo');
 
     expect(mockFetch).toHaveBeenCalled();
     expect(mockFetch).toHaveBeenCalledTimes(1);
     expect(mockFetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?f=c');
 
+    await user.clear(inputEl);
     await user.type(inputEl, 'aa');
     await user.click(firstEl);
     await user.click(searchButtonEl);
     expect(mockFetch).toHaveBeenCalledTimes(1);
+
+    window.alert = jsdomAlert; // https://stackoverflow.com/questions/55088482/jest-not-implemented-window-alert
   });
 
   test('if returns correct drinks search value', async () => {
@@ -129,6 +131,15 @@ describe('Test search bar', () => {
     //   FetchAPIFood: vi.fn(),
     //   FetchAPIDrinks: vi.fn(),
     // }));
+    const jsdomAlert = window.alert; // https://stackoverflow.com/questions/55088482/jest-not-implemented-window-alert
+    window.alert = () => {};
+
+    const fetchResolvedValue = {
+      json: async () => mockSearch,
+    } as Response;
+
+    const mockFetch = vi.spyOn(global, 'fetch')
+      .mockResolvedValue(fetchResolvedValue);
 
     const { user } = renderWithRouter(<Provider store={ store }><Drinks /></Provider>, { route: '/drinks' });
     const searchButtonEl = screen.getByTestId('exec-search-btn');
@@ -140,20 +151,25 @@ describe('Test search bar', () => {
 
     await user.type(inputEl, 'vodka');
     await user.click(searchButtonEl);
-    expect(FetchAPIDrinks).toHaveBeenCalled();
-    expect(FetchAPIDrinks).toHaveBeenCalledWith('i', 'vodka');
+    expect(mockFetch).toHaveBeenCalled();
+    expect(mockFetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=vodka');
 
     const nameEl = screen.getByText(/name/i);
     await user.click(nameEl);
     await user.clear(inputEl);
     await user.type(inputEl, 'vodka');
-    expect(FetchAPIDrinks).toHaveBeenCalledTimes(2);
-    expect(FetchAPIDrinks).toHaveBeenCalledWith('n', 'vodka');
+    await user.click(searchButtonEl);
+    expect(mockFetch).toHaveBeenCalledTimes(2);
+    expect(mockFetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=vodka');
 
     const firstEl = screen.getByText(/first/i);
     await user.click(firstEl);
+    await user.clear(inputEl);
     await user.type(inputEl, 'v');
-    expect(FetchAPIDrinks).toHaveBeenCalledTimes(3);
-    expect(FetchAPIDrinks).toHaveBeenCalledWith('f', 'v');
+    await user.click(searchButtonEl);
+    expect(mockFetch).toHaveBeenCalledTimes(3);
+    expect(mockFetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=v');
+
+    window.alert = jsdomAlert; // https://stackoverflow.com/questions/55088482/jest-not-implemented-window-alert
   });
 });

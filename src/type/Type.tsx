@@ -116,11 +116,6 @@ export type DrinkType = {
   strCreativeCommonsConfirmed: string
   dateModified: string
 };
-type MealTest = {
-  strMeal: string;
-  strMealThumb: string;
-  idMeal: string;
-};
 
 export type ReduxState = {
   search: { searchInput:string };
