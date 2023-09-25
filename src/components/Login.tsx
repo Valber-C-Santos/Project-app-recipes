@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User } from '../type/Type';
+import { User } from '../utils/type/Type';
 
 const INITAL_STATE_USER = {
   email: '',
@@ -15,9 +15,8 @@ function Login() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     localStorage.setItem('user', JSON.stringify({ email }));
-    navigate('/Header');
+    navigate('/meals');
   };
-
   function handleChange({ target }: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = target;
     setLogin({
