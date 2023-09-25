@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { RecipeList } from './RecipeList';
 import { MealType, MealsType, RecipeListType } from '../type/Type';
 import { fetchDrinks, fetchFood } from './Actions/fetchAPIActions';
 import { Dispatch, RootState, store } from './Reducers/reducers';
+import fetchAPIReducer from './Reducers/fetchAPIReducer';
 
 function SearchBar() {
   const [searchType, setSearchType] = useState('i');
@@ -19,7 +20,24 @@ function SearchBar() {
   // console.log(searchType);
 
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch:Dispatch = useDispatch();
+
+  useEffect(() => {
+    if (recipeList.data.meals && recipeList.data.meals.length === 1) {
+      const mealID = recipeList.data.meals[0].idMeal;
+      navigate(`/meals/${mealID}`);
+    }
+
+    if (recipeList.data.drinks && recipeList.data.drinks.length === 1) {
+      const drinksID = recipeList.data.drinks[0].idDrink;
+      navigate(`/drinks/${drinksID}`);
+    }
+
+    if (recipeList.data.drinks === null || recipeList.data.meals === null) {
+      window.alert("Sorry, we haven't found any recipes for these filters");
+    }
+  }, [recipeList]);
 
   const handleSearch = async () => {
     console.log(recipeList);
@@ -37,10 +55,6 @@ function SearchBar() {
       console.log('/drinks dispatch');
 
       dispatch(fetchDrinks(searchType, searchTerm));
-    }
-
-    if (recipeList.data.drinks === null || recipeList.data.meals === null) {
-      window.alert("Sorry, we haven't found any recipes for these filters");
     }
 
     console.log('handledsearch');
