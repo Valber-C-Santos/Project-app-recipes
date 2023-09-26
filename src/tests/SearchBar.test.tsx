@@ -1,12 +1,16 @@
 import { vi } from 'vitest';
-import { screen } from '@testing-library/dom';
+import { fireEvent, screen, waitFor } from '@testing-library/dom';
 import { Provider } from 'react-redux';
+import { createMemoryHistory } from 'history';
+import { render } from '@testing-library/react';
+import * as routeEx from 'react-router-dom';
 import renderWithRouter from '../components/Helpers/renderWithRouter';
 import SearchBar from '../components/SearchBar';
 import Meals from '../components/Meals';
 import { store } from '../components/Reducers/reducers';
 import Drinks from '../components/Drinks';
 import renderWithRouterAndRedux from '../components/Helpers/renderWithRouterWithRedux';
+import App from '../App';
 
 const mockSearch = {
   data: {
@@ -75,6 +79,7 @@ const INITIAL_STATE = {
   searchResults: { searchResults: [] },
   fetchAPI: { loading: false, data: [] },
 };
+const SEARCH_BUTTON_ID = 'exec-search-btn';
 
 describe('Test search bar', () => {
   afterEach(() => {
@@ -105,9 +110,10 @@ describe('Test search bar', () => {
 
     const { user } = renderWithRouterAndRedux(<Meals />, '/meals', INITIAL_STATE);
 
-    const searchButtonEl = screen.getByTestId('exec-search-btn');
+    const searchButtonEl = screen.getByTestId(SEARCH_BUTTON_ID);
     const showSearchEl = screen.getByRole('button', { name: /search icon/i });
     const firstEl = screen.getByText(/first/i);
+    const nameEl = screen.getByText(/name/i);
 
     await user.click(firstEl);
     await user.click(showSearchEl);
@@ -117,8 +123,6 @@ describe('Test search bar', () => {
     await user.type(inputEl, 'c');
     expect(inputEl).toHaveValue('c');
     await user.click(searchButtonEl);
-
-    // console.log('clickou');
 
     expect(mockFetch).toHaveBeenCalled();
     expect(mockFetch).toHaveBeenCalledTimes(1);
@@ -130,7 +134,70 @@ describe('Test search bar', () => {
     await user.click(searchButtonEl);
     expect(mockFetch).toHaveBeenCalledTimes(1);
 
+    // const navigate = vi.fn()
+    //   .mockImplementation(() => navigate);
+
+    // const mockedNavigate = vi.fn();
+
+    // vi.doMock('react-router-dom', async () => {
+    //   const actual = await vi.importActual('react-router-dom') as any;
+    //   return {
+    //     ...actual,
+    //     useNavigate: mockedNavigate,
+    //   };
+    // });
+    // const navigateSpy = vi.fn();
+    // const originalNavigate = routeEx.useNavigate();
+    // vi.spyOn(routeEx, 'useNavigate')
+    //  .mockImplementation(() => navigateSpy);
+    // const mockNavigate = vi.spyOn(routeEx, 'useLocation');
+
+    // const mockedNavigate = vi.fn();
+
+    // vi.doMock('react-router-dom', () => ({
+    //   ...(vi.importActual('react-router-dom')),
+    //   useNavigate: mockedNavigate,
+    // }));
+
+    // vi.useFakeTimers();
+    // vi.runAllTicks();
+    // await waitFor(() => expect(window.location.href).toContain('/meals/52771'));
+    // expect(mockedNavigate).toHaveBeenCalled();
     window.alert = jsdomAlert; // https://stackoverflow.com/questions/55088482/jest-not-implemented-window-alert
+  });
+
+  test.only('if when just one item it redirects to details', async () => {
+    const { user } = renderWithRouterAndRedux(<App />, '/');
+    expect(window.location.href).toBe('http://localhost:3000/');
+    const emailElem = screen.getByRole('textbox', { name: /e-mail:/i });
+    const passElem = screen.getByTestId('password-input');
+    await user.type(emailElem, 'example@gmail.com');
+    await user.type(passElem, '1234567');
+    const buttonElem = screen.getByRole('button', {
+      name: /entrar/i,
+    });
+    await user.click(buttonElem);
+
+    expect(window.location.href).toContain('/meals');
+
+    const searchButtonEl = screen.getByTestId(SEARCH_BUTTON_ID);
+    const showSearchEl = screen.getByRole('button', { name: /search icon/i });
+    const nameEl = screen.getByText(/name/i);
+    fireEvent.click(showSearchEl);
+    const inputEl = await screen.findByTestId('search-input');
+
+    fireEvent.click(nameEl);
+    // await user.clear(inputEl);
+    fireEvent.change(inputEl, 'Arrabiata');
+    // vi.useFakeTimers();
+
+    fireEvent.click(searchButtonEl);
+    // vi.runAllTicks();
+    const textEl = await screen.findByRole('heading', {
+      name: /spicy arrabiata penne/i,
+    });
+    expect(textEl).toBeInTheDocument();
+    // expect(window.location.href).toContain('/meals/52771');
   });
 
   test('if returns correct drinks search value', async () => {
@@ -150,7 +217,7 @@ describe('Test search bar', () => {
       .mockResolvedValue(fetchResolvedValue);
 
     const { user } = renderWithRouter(<Provider store={ store }><Drinks /></Provider>, { route: '/drinks' });
-    const searchButtonEl = screen.getByTestId('exec-search-btn');
+    const searchButtonEl = screen.getByTestId(SEARCH_BUTTON_ID);
     const showSearchEl = screen.getByRole('button', { name: /search icon/i });
 
     await user.click(showSearchEl);

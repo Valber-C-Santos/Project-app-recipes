@@ -2,8 +2,8 @@ import { ThunkDispatch } from 'redux-thunk';
 import { Action } from 'redux';
 import { FETCH_DRINKS_ERROR, FETCH_DRINKS_REQUEST, FETCH_DRINKS_SUCCESS,
   FETCH_FOOD_ERROR, FETCH_FOOD_REQUEST,
-  FETCH_FOOD_SUCCESS, ReduxState } from '../../type/Type';
-import { Dispatch, RootState } from '../Reducers/reducers';
+  FETCH_FOOD_SUCCESS } from '../../type/Type';
+import { RootState } from '../Reducers/reducers';
 
 const fetchFoodRequest = () => ({
   type: FETCH_FOOD_REQUEST,
@@ -35,8 +35,10 @@ const fetchDrinksSuccess = (drinks:any) => ({
 
 type GetState = () => RootState;
 
+// também pode usar :Dispatch, _getState:GetState
+
 export const fetchFood = (type:string, search:string) => {
-  return async (dispatch:Dispatch, _getState: GetState) => {
+  return async (dispatch:ThunkDispatch<RootState, null, Action<string>>) => {
     dispatch(fetchFoodRequest());
     try {
       let url;

@@ -28,7 +28,7 @@ const fetchAPIReducer = (state = INITIAL_STATE, action:AnyAction) => {
       ...state,
       loading: false,
     };
-    // case FETCH_DRINKS_REQUEST: return {
+    // case FETCH_DRINKS_REQUEST: return { // caso repetido
     //   ...state,
     //   loading: true,
     // };
@@ -37,7 +37,7 @@ const fetchAPIReducer = (state = INITIAL_STATE, action:AnyAction) => {
         ...state,
         data: action.payload,
       };
-    // case FETCH_DRINKS_ERROR:
+    // case FETCH_DRINKS_ERROR: // caso repetido
     //   return {
     //     ...state,
     //     loading: false,

@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FetchAPIFood, FetchAPIDrinks } from './FetchAPI';
-import { setSearchResults } from './Actions/searchResultActions';
 import { RecipeList } from './RecipeList';
-import { MealType, MealsType, RecipeListType } from '../type/Type';
 import { fetchDrinks, fetchFood } from './Actions/fetchAPIActions';
 import { Dispatch, RootState, store } from './Reducers/reducers';
-import fetchAPIReducer from './Reducers/fetchAPIReducer';
 
 function SearchBar() {
   const [searchType, setSearchType] = useState('i');
   const searchTerm = useSelector((state:RootState) => state.search.searchInput);
   const recipeList = useSelector((state:RootState) => state.fetchAPI);
 
-  console.log(recipeList);
+  // console.log(recipeList);
   // console.log(recipeList);
   // console.log(searchType);
 
@@ -24,8 +19,12 @@ function SearchBar() {
   const dispatch:Dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(recipeList.data);
+
     if (recipeList.data.meals && recipeList.data.meals.length === 1) {
       const mealID = recipeList.data.meals[0].idMeal;
+      console.log('alo');
+
       navigate(`/meals/${mealID}`);
     }
 
@@ -35,29 +34,31 @@ function SearchBar() {
     }
 
     if (recipeList.data.drinks === null || recipeList.data.meals === null) {
-      window.alert("Sorry, we haven't found any recipes for these filters");
+      window.alert("Sorry, we haven't found any recipes for these filters.");
     }
-  }, [recipeList]);
+  }, [recipeList, navigate]);
 
   const handleSearch = async () => {
-    console.log(recipeList);
+    // console.log(recipeList);
 
     if (searchType === 'f' && searchTerm.length > 1) {
       window.alert('Your search must have only 1 (one) character');
       return null;
     }
+    console.log(location.pathname);
     if (location.pathname === '/meals') {
-      console.log('/meals dispatch');
+      // console.log('/meals dispatch');
 
       store.dispatch(fetchFood(searchType, searchTerm));
     }
     if (location.pathname === '/drinks') {
-      console.log('/drinks dispatch');
+      // console.log('/drinks dispatch');
 
       dispatch(fetchDrinks(searchType, searchTerm));
     }
 
-    console.log('handledsearch');
+    // USANDO SOMENTE FETCH
+    // console.log('handledsearch');
     // if (location.pathname === '/meals') {
     //   const data = await FetchAPIFood(searchType, searchTerm);
     //   console.log('data1:', data);
@@ -80,7 +81,7 @@ function SearchBar() {
 
   const handleChangeRadio = (e:React.ChangeEvent<HTMLInputElement>) => {
     setSearchType(e.target.value);
-    console.log(searchType);
+    // console.log(searchType);
   };
 
   return (

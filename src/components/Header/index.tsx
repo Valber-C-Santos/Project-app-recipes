@@ -1,32 +1,3 @@
-// type HeaderProps = {
-//   title: string;
-//   showSearchIcon: boolean;
-//   showProfileIcon: boolean;
-// };
-
-// export default function Header({ title, showProfileIcon, showSearchIcon }: HeaderProps) {
-//   const [showSearchInput, setShowSearchInput] = useState(false);
-
-//   return (
-//     <header>
-//       <h1 data-testid="page-title">{title}</h1>
-//       {showSearchIcon && (
-//         <div>
-//           <button onClick={ () => setShowSearchInput(!showSearchInput) }>
-//             <img src={ searchIcon } alt="Pesquisar" data-testid="search-top-btn" />
-//             {showSearchInput && (
-//               <input type="text" placeholder="Pesquisar" data-testid="search-input" />
-//             )}
-//           </button>
-//         </div>
-//       )}
-//       {showProfileIcon && (
-//         <Link to="/profile">
-//           <img src={ profileIcon } alt="Perfil" data-testid="profile-top-btn" />
-//         </Link>
-//       )}
-//     </header>
-
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -43,10 +14,10 @@ export default function Header() {
   const [title, setTitle] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
-  const mealPattern = /^\/meals\/\d+\/$/;
-  const drinkPattern = /^\/drinks\/\d+\/$/;
-  const mealInProgressPattern = /^\/meals\/\d+\/in-progress$/;
-  const drinkInProgressPattern = /^\/drinks\/\d+\/in-progress$/;
+  const mealPattern = /^\/meals\/\d+\/$/; // Não está funcionando
+  const drinkPattern = /^\/drinks\/\d+\/$/; // Não está funcionando
+  const mealInProgressPattern = /^\/meals\/\d+\/in-progress$/; // Não está funcionando
+  const drinkInProgressPattern = /^\/drinks\/\d+\/in-progress$/; // Não está funcionando
 
   // console.log(showHeader);
   // console.log(showProfile);
