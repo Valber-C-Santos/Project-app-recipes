@@ -23,7 +23,8 @@ export const fetchDetails = (type:string, id:string) => {
     dispatch(fetchDetailsRequest());
     try {
       let url = '';
-      if (type === 'meal') {
+      // console.log(type, id);
+      if (type === 'meals') {
         url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
       }
       if (type === 'drinks') {

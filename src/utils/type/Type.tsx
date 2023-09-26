@@ -4,6 +4,7 @@ export type User = {
 };
 
 export type MealType = {
+  [key: string]: string | null;
   idMeal: string
   strMeal: string
   strDrinkAlternate: string
@@ -68,6 +69,7 @@ export type DrinksType = {
 };
 
 export type DrinkType = {
+  [key: string]: string | null;
   idDrink: string
   strDrink: string
   strDrinkAlternate: string
