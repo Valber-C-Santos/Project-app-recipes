@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header/index';
 import { DrinkType } from '../utils/type/Type';
 import CategoryFilter from '../components/CategoryFilter';
+import Footer from '../components/Footer';
 
 export default function Drinks() {
   const [drinks, setDrinks] = useState<DrinkType[]>([]);
@@ -64,6 +65,7 @@ export default function Drinks() {
             </div>
           );
         })}
+        <Footer />
       </div>
     </div>
   );

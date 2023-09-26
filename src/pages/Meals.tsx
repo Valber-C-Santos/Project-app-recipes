@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { MealType } from '../utils/type/Type';
 import CategoryFilter from '../components/CategoryFilter';
+import Footer from '../components/Footer';
 
 export default function Meals() {
   const [meals, setMeals] = useState<MealType[]>([]);
@@ -68,6 +69,7 @@ export default function Meals() {
             </div>
           );
         })}
+        <Footer />
       </div>
     </div>
 

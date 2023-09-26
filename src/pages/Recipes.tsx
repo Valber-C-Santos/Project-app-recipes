@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Meals from './Meals';
 import Drinks from './Drinks';
+import Footer from '../components/Footer';
 
 function Recipes() {
   const location = useLocation();
@@ -11,7 +12,7 @@ function Recipes() {
     <div>
       <h1>{isMealsRoute ? 'Meals' : 'Drinks'}</h1>
       {isMealsRoute ? <Meals /> : <Drinks />}
-
+      <Footer />
     </div>
   );
 }
