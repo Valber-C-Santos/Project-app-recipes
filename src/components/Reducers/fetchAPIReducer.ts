@@ -6,7 +6,7 @@ import {
   FETCH_DRINKS_REQUEST,
   FETCH_DRINKS_SUCCESS,
   FETCH_DRINKS_ERROR,
-} from '../../type/Type';
+} from '../../utils/type/Type';
 
 const INITIAL_STATE = {
   loading: false,

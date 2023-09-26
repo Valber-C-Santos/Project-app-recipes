@@ -1,5 +1,5 @@
-import Footer from './Footer';
-import Header from './Header/index';
+import Footer from '../components/Footer';
+import Header from '../components/Header/index';
 
 export default function Arrabiata() {
   return (

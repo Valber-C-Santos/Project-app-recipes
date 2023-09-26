@@ -3,6 +3,7 @@ const INITIAL_STATE = {
     meals: [],
     drinks: [],
   },
+};
 
 const searchResultReducer = (state = INITIAL_STATE, action:any) => {
   switch (action.type) {

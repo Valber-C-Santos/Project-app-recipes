@@ -1,4 +1,4 @@
-import { RecipeCardType } from '../type/Type';
+import { RecipeCardType } from '../utils/type/Type';
 
 export function RecipeCard({ index, img, name }:RecipeCardType) {
   return (

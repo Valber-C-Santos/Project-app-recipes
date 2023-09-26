@@ -1,3 +1,4 @@
+// JEITO ANTIGO USANDO APENAS FETCH
 export async function FetchAPIFood(type: string, search: string) {
   try {
     if (type === 's' || type === 'f') {

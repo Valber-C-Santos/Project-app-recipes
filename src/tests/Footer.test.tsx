@@ -1,5 +1,5 @@
 import renderWithRouterAndRedux from '../components/Helpers/renderWithRouterWithRedux';
-import Meals from '../components/Meals';
+import Meals from '../pages/Meals';
 
 describe('Teste Footer', () => {
   it('Renderiza', () => {

@@ -1,4 +1,4 @@
-import { DrinksType, MealsType } from '../type/Type';
+import { DrinksType, MealsType } from '../utils/type/Type';
 import { RecipeCard } from './RecipeCard';
 
 export function RecipeList(

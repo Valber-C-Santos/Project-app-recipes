@@ -90,7 +90,7 @@ function SearchBar() {
           data-testid="ingredient-search-radio"
           type="radio"
           value="i"
-          checked={ searchType === 'i' 
+          checked={ searchType === 'i' }
           onChange={ handleChangeRadio }
         />
         Ingredient
