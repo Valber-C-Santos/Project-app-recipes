@@ -1,5 +1,3 @@
-// MÉTODO ANTIGO USANDO APENAS FETCH / SEM THUNK
-
 export async function FetchAPIFood(type: string, search: string) {
   try {
     if (type === 's' || type === 'f') {

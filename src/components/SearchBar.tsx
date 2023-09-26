@@ -40,7 +40,6 @@ function SearchBar() {
 
   const handleSearch = async () => {
     // console.log(recipeList);
-
     if (searchType === 'f' && searchTerm.length > 1) {
       window.alert('Your search must have only 1 (one) character');
       return null;
@@ -91,7 +90,7 @@ function SearchBar() {
           data-testid="ingredient-search-radio"
           type="radio"
           value="i"
-          checked={ searchType === 'i' }
+          checked={ searchType === 'i' 
           onChange={ handleChangeRadio }
         />
         Ingredient
