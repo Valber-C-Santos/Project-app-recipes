@@ -1,19 +1,21 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import Login from '../components/Login';
-import App from '../App';
-import renderWithRouter from '../RenderWithRouter';
+import renderWithRouterAndRedux from '../components/Helpers/renderWithRouterWithRedux';
+import renderWithRouter from '../components/Helpers/renderWithRouter';
 import Profile from '../pages/Profile';
 import Footer from '../components/Footer';
+import { store } from '../components/Reducers/reducers';
 
 test('Se cobertura de 45% da tela de login.'); {
-  render(<Login />, { wrapper: BrowserRouter });
+  renderWithRouterAndRedux(<Login />);
   const loginButton = screen.getByRole('button', { name: /Entrar/i });
   expect(loginButton).toBeInTheDocument();
 }
 
 test('Se verifica a existência dos campos de entrada para email e senha', () => {
-  render(<Login />, { wrapper: BrowserRouter });
+  renderWithRouterAndRedux(<Login />);
 
   const emailInput = screen.getByTestId('email-input');
   const passwordInput = screen.getByTestId('password-input');
@@ -24,7 +26,7 @@ test('Se verifica a existência dos campos de entrada para email e senha', () =>
 
 describe('Teste Footer', () => {
   it('Renderiza', () => {
-    const { getByTestId } = renderWithRouter(<Footer />);
+    const { getByTestId } = renderWithRouter(<Provider store={ store }><Footer /></Provider>);
 
     expect(getByTestId('footer')).toBeInTheDocument();
     expect(getByTestId('meals-bottom-btn')).toBeInTheDocument();
@@ -34,7 +36,7 @@ describe('Teste Footer', () => {
 
 describe('Teste Profile', () => {
   it('Renderiza', () => {
-    const { getByTestId } = renderWithRouter(<Profile />);
+    const { getByTestId } = renderWithRouter(<Provider store={ store }><Profile /></Provider>);
 
     expect(getByTestId('profile-email')).toBeInTheDocument();
     expect(getByTestId('profile-done-btn')).toBeInTheDocument();

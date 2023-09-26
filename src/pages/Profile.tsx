@@ -1,6 +1,6 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 function Profile() {
   const handleLogout = () => {
@@ -9,6 +9,7 @@ function Profile() {
   return (
     <>
       <div>
+        <Header />
         <h2>Perfil</h2>
         <p data-testid="profile-email">
           {localStorage.getItem('user')}

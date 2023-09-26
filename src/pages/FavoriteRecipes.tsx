@@ -1,11 +1,11 @@
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-export default function DoneRecipe() {
+export default function FavoriteRecipes() {
   return (
     <div>
       <Header />
-      DoneRecipe
+      FavoriteRecipes
       <Footer />
     </div>
   );
