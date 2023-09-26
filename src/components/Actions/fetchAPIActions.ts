@@ -38,7 +38,7 @@ type GetState = () => RootState;
 // também pode usar :Dispatch, _getState:GetState
 
 export const fetchFood = (type:string, search:string) => {
-  return async (dispatch: Dispatch, _getState:GetState ) => {
+  return async (dispatch: Dispatch, _getState:GetState) => {
     dispatch(fetchFoodRequest());
     try {
       let url;
