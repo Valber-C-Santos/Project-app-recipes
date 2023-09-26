@@ -16,7 +16,6 @@ function Login() {
     event.preventDefault();
     localStorage.setItem('user', JSON.stringify({ email }));
     navigate('/meals');
-
   };
 
   function handleChange({ target }: React.ChangeEvent<HTMLInputElement>) {

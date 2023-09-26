@@ -2,6 +2,7 @@ export type User = {
   email: string,
   password: string
 };
+
 export type MealType = {
   idMeal: string
   strMeal: string
@@ -119,3 +120,22 @@ export type DrinkType = {
 export type ReduxState = {
   search: { searchInput:string };
 };
+
+export type RecipeCardType = {
+  index: string;
+  img: string;
+  name: string;
+};
+
+export type RecipeListType = {
+  meals?: [],
+  drinks?: [],
+};
+
+export const FETCH_FOOD_REQUEST = 'FETCH_FOOD_REQUEST';
+export const FETCH_FOOD_ERROR = 'FETCH_FOOD_ERROR';
+export const FETCH_FOOD_SUCCESS = 'FETCH_FOOD_SUCCESS';
+
+export const FETCH_DRINKS_REQUEST = 'FETCH_DRINKS_REQUEST';
+export const FETCH_DRINKS_ERROR = 'FETCH_DRINKS_ERROR';
+export const FETCH_DRINKS_SUCCESS = 'FETCH_DRINKS_SUCCESS';

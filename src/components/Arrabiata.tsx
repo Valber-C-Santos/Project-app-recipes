@@ -1,7 +1,7 @@
 import Footer from './Footer';
 import Header from './Header/index';
 
-export default function Profile() {
+export default function Arrabiata() {
   return (
     <>
       <Header />
@@ -9,3 +9,4 @@ export default function Profile() {
     </>
   );
 }
+// I hate Arrabiata
