@@ -3,13 +3,12 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { legacy_createStore as createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { ReduxState } from '../../type/Type';
-import { rootReducer } from '../Reducers/reducers';
+import { RootState, rootReducer } from '../Reducers/reducers';
 
 function renderWithRouterAndRedux(
   component: JSX.Element,
   route: string = '/',
-  state: ReduxState | undefined = undefined,
+  state: RootState | undefined = undefined,
   store = createStore(rootReducer, state),
 ) {
   window.history.pushState({}, 'Test page', route);
