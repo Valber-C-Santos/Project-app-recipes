@@ -5,12 +5,14 @@ import searchReducer from './searchReducer';
 import searchResultReducer from './searchResultReducer';
 import fetchAPIReducer from './fetchAPIReducer';
 import fetchDetailsReducer from './fetchDetailsReducer';
+import fetchRecReducer from './fetchRecReducer';
 
 export const rootReducer = combineReducers({
   search: searchReducer,
   searchResults: searchResultReducer,
   fetchAPI: fetchAPIReducer,
   fetchDetails: fetchDetailsReducer,
+  fetchRec: fetchRecReducer,
 });
 
 export const store = createStore(
