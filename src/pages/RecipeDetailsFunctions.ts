@@ -1,14 +1,6 @@
-import { RecipeType } from '../utils/type/Type';
+import { DrinkType, MealType, RecipeType } from '../utils/type/Type';
 
-const favoritesJSON = localStorage.getItem('favoriteRecipes');
-const favorites: RecipeType[] = favoritesJSON ? JSON.parse(favoritesJSON) : [];
-
-export const addFavoriteRecipe = (recipe: RecipeType) => {
-  favorites.push(recipe);
-  localStorage.setItem('favoriteRecipes', JSON.stringify(favorites));
-};
-
-export const convertToRecipeFormat = (type: string, data:any) => {
+export const convertToRecipeFormat = (type: string, data:any): RecipeType | null => {
   let recipe: RecipeType | null = null;
   if (type === 'meals') {
     const meal = data.meals[0];
@@ -35,4 +27,58 @@ export const convertToRecipeFormat = (type: string, data:any) => {
     };
   }
   return recipe;
+};
+
+export function filterMealIngr(meal: MealType)
+  : { ingredient: string; measure: string }[] {
+  const ingredients: { ingredient: string; measure: string }[] = [];
+  for (let i = 1; i <= 20; i++) {
+    const ingredientKey = `strIngredient${i}`;
+    const measureKey = `strMeasure${i}`;
+
+    const ingredient = meal[ingredientKey];
+    const measure = meal[measureKey];
+
+    if (ingredient !== null && ingredient !== ''
+      && measure !== null && measure !== '') {
+      ingredients.push({
+        ingredient,
+        measure,
+      });
+    }
+  }
+  return ingredients;
+}
+
+export function filterDrinkIngr(drink: DrinkType)
+  : { ingredient: string; measure: string }[] {
+  const ingredients: { ingredient: string; measure: string }[] = [];
+  for (let i = 1; i <= 20; i++) {
+    const ingredientKey = `strIngredient${i}`;
+    const measureKey = `strMeasure${i}`;
+
+    const ingredient = drink[ingredientKey];
+    const measure = drink[measureKey];
+
+    if (ingredient !== null && ingredient !== ''
+      && measure !== null && measure !== '') {
+      ingredients.push({
+        ingredient,
+        measure,
+      });
+    }
+  }
+  return ingredients;
+}
+
+export const searchRecipeById = (idToSearch: number): RecipeType | null => {
+  const recipesJSON = localStorage.getItem('favoriteRecipes');
+  if (recipesJSON) {
+    const recipes: RecipeType[] = JSON.parse(recipesJSON);
+    const foundRecipe = recipes.find((recipe) => recipe.id === idToSearch);
+    if (foundRecipe) {
+      return foundRecipe;
+    }
+  }
+  return null;
 };

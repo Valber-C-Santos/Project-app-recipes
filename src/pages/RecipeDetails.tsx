@@ -5,14 +5,18 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { fetchDetails } from '../components/Actions/fetchDetailsActions';
 import { Dispatch, RootState } from '../components/Reducers/reducers';
-import { DrinkType, MealType } from '../utils/type/Type';
 import { fetchRecDrinks, fetchRecFood } from '../components/Actions/fetchRecActions';
 import RecCarousel from './RecCarousel';
 import shareIcon from '../images/shareIcon.svg';
-import { addFavoriteRecipe, convertToRecipeFormat } from './RecipeDetailsFunctions';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { convertToRecipeFormat,
+  filterDrinkIngr, filterMealIngr } from './RecipeDetailsFunctions';
+import { RecipeType } from '../utils/type/Type';
 
 export default function RecipeDetails() {
   const [shareMsg, setShareMsg] = useState(false);
+  const [isFav, setIsFav] = useState(Boolean);
   const [loading, setLoading] = useState(true);
   const [mealIngr, setMealIngr] = useState<{ ingredient: string;
     measure: string; }[]>([]);
@@ -25,6 +29,11 @@ export default function RecipeDetails() {
   const data = useSelector((state:RootState) => state.fetchDetails.data);
   const recData = useSelector((state:RootState) => state.fetchRec.data);
   const mealsOrDrinks = location.pathname.replace(/^\/([^/]*).*$/, '$1').toString();
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+
+  useEffect(() => {
+    if (!loading) handleFavorite();
+  }, [loading]);
 
   useEffect(() => {
     setLoading(true);
@@ -39,66 +48,35 @@ export default function RecipeDetails() {
             setDrinkIngr(filterDrinkIngr(data.drinks[0]));
             dispatch(fetchRecFood());
           }
-          // if (mealsOrDrinks === 'drinks') dispatch(fetchRecFood());
-          // if (mealsOrDrinks === 'meals') dispatch(fetchRecDrinks());
         })
         .finally(() => {
           setLoading(false);
         });
     }
-  }, [data, dispatch, id, mealsOrDrinks]);
-
-  function filterMealIngr(meal: MealType)
-    : { ingredient: string; measure: string }[] {
-    const ingredients: { ingredient: string; measure: string }[] = [];
-    for (let i = 1; i <= 20; i++) {
-      const ingredientKey = `strIngredient${i}`;
-      const measureKey = `strMeasure${i}`;
-
-      const ingredient = meal[ingredientKey];
-      const measure = meal[measureKey];
-
-      if (ingredient !== null && ingredient !== ''
-        && measure !== null && measure !== '') {
-        ingredients.push({
-          ingredient,
-          measure,
-        });
-      }
-    }
-    return ingredients;
-  }
-
-  function filterDrinkIngr(drink: DrinkType)
-    : { ingredient: string; measure: string }[] {
-    const ingredients: { ingredient: string; measure: string }[] = [];
-    for (let i = 1; i <= 20; i++) {
-      const ingredientKey = `strIngredient${i}`;
-      const measureKey = `strMeasure${i}`;
-
-      const ingredient = drink[ingredientKey];
-      const measure = drink[measureKey];
-
-      if (ingredient !== null && ingredient !== ''
-        && measure !== null && measure !== '') {
-        ingredients.push({
-          ingredient,
-          measure,
-        });
-      }
-    }
-    return ingredients;
-  }
+  }, [data, id, dispatch, mealsOrDrinks]);
 
   const handleShareMsg = () => {
     setShareMsg(true);
     navigator.clipboard.writeText(window.location.href);
   };
 
-  const handleFavorite = () => {
-    const formatedData = convertToRecipeFormat(mealsOrDrinks, data);
-    if (formatedData) addFavoriteRecipe(formatedData);
-  };
+  function handleFavorite() {
+    const itemId = Number(id);
+    const storedData = localStorage.getItem('favoriteRecipes');
+    const favorites: RecipeType[] = storedData ? JSON.parse(storedData) : [];
+    const index = favorites.findIndex((item) => Number(item.id) === itemId);
+    if (index !== -1 && !isFirstLoad) {
+      favorites.splice(index, 1);
+      setIsFav(false);
+    } else if (data && !isFirstLoad) {
+      const pushData = convertToRecipeFormat(mealsOrDrinks, data);
+      if (pushData) favorites.push(pushData);
+      setIsFav(true);
+    }
+    if (favorites.length > 0 && isFirstLoad) setIsFav(true);
+    setIsFirstLoad(false);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favorites));
+  }
 
   return (
     <div>
@@ -152,24 +130,26 @@ export default function RecipeDetails() {
             </div>
             <Footer />
             <div className="button-div">
-              <button
-                data-testid="share-btn"
-                onClick={ handleShareMsg }
-              >
+              <button data-testid="share-btn" onClick={ handleShareMsg }>
                 Share
                 <img src={ shareIcon } alt="shareIcon" />
               </button>
-              <button
-                onClick={ handleFavorite }
-                data-testid="favorite-btn"
-              >
+              <button onClick={ handleFavorite }>
                 Favorite
+                {isFav
+                  ? <img
+                      data-testid="favorite-btn"
+                      alt="black heart"
+                      src={ blackHeartIcon }
+                  />
+                  : <img
+                      data-testid="favorite-btn"
+                      alt="white heart"
+                      src={ whiteHeartIcon }
+                  />}
               </button>
               <Link to={ `/meals/${id}/in-progress` }>
-                <button
-                  id="start-recipe-btn"
-                  data-testid="start-recipe-btn"
-                >
+                <button id="start-recipe-btn" data-testid="start-recipe-btn">
                   Start Recipe
                 </button>
               </Link>
@@ -219,24 +199,26 @@ export default function RecipeDetails() {
             </div>
             <Footer />
             <div className="button-div">
-              <button
-                data-testid="share-btn"
-                onClick={ handleShareMsg }
-              >
+              <button data-testid="share-btn" onClick={ handleShareMsg }>
                 Share
                 <img src={ shareIcon } alt="shareIcon" />
               </button>
-              <button
-                onClick={ handleFavorite }
-                data-testid="favorite-btn"
-              >
+              <button onClick={ handleFavorite }>
                 Favorite
+                {isFav
+                  ? <img
+                      data-testid="favorite-btn"
+                      alt="black heart"
+                      src={ blackHeartIcon }
+                  />
+                  : <img
+                      data-testid="favorite-btn"
+                      alt="white heart"
+                      src={ whiteHeartIcon }
+                  />}
               </button>
               <Link to={ `/drinks/${id}/in-progress` }>
-                <button
-                  id="start-recipe-btn"
-                  data-testid="start-recipe-btn"
-                >
+                <button id="start-recipe-btn" data-testid="start-recipe-btn">
                   Start Recipe
                 </button>
               </Link>
