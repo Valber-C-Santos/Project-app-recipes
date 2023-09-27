@@ -134,6 +134,16 @@ export type RecipeListType = {
   drinks?: [],
 };
 
+export type RecipeType = {
+  id: number;
+  type: string;
+  nationality: string;
+  category: string;
+  alcoholicOrNot: string;
+  name: string;
+  image: string;
+};
+
 export const FETCH_FOOD_REQUEST = 'FETCH_FOOD_REQUEST';
 export const FETCH_FOOD_ERROR = 'FETCH_FOOD_ERROR';
 export const FETCH_FOOD_SUCCESS = 'FETCH_FOOD_SUCCESS';

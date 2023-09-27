@@ -1,19 +1,36 @@
 body {
-    margin: 0;
-    padding: 0;
-    height: 1000px;
+  margin: 0;
+  padding: 0;
+  height: 1000px;
 }
  
 .App {
-    color: #228b22;
-    text-align: center;
+  color: #228b22;
+  text-align: center;
 }
  
 .footer {
-    border-top: 1px solid black;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    color: white;
-    font-size: 25px;
+  border-top: 1px solid black;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  color: white;
+  font-size: 25px;
+}
+
+.button-div {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
+  position: fixed;
+  bottom: 0;
+  right: 103px;
+  margin: 0px;
+}
+
+#start-recipe-btn {
+  position: fixed;
+  bottom: 0;
+  right: 0;
 }

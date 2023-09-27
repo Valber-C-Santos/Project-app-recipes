@@ -1,5 +1,4 @@
-import Carousel from 'react-bootstrap/Carousel';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
@@ -9,8 +8,11 @@ import { Dispatch, RootState } from '../components/Reducers/reducers';
 import { DrinkType, MealType } from '../utils/type/Type';
 import { fetchRecDrinks, fetchRecFood } from '../components/Actions/fetchRecActions';
 import RecCarousel from './RecCarousel';
+import shareIcon from '../images/shareIcon.svg';
+import { addFavoriteRecipe, convertToRecipeFormat } from './RecipeDetailsFunctions';
 
 export default function RecipeDetails() {
+  const [shareMsg, setShareMsg] = useState(false);
   const [loading, setLoading] = useState(true);
   const [mealIngr, setMealIngr] = useState<{ ingredient: string;
     measure: string; }[]>([]);
@@ -88,12 +90,23 @@ export default function RecipeDetails() {
     return ingredients;
   }
 
+  const handleShareMsg = () => {
+    setShareMsg(true);
+    navigator.clipboard.writeText(window.location.href);
+  };
+
+  const handleFavorite = () => {
+    const formatedData = convertToRecipeFormat(mealsOrDrinks, data);
+    if (formatedData) addFavoriteRecipe(formatedData);
+  };
+
   return (
     <div>
       {!loading && mealsOrDrinks === 'meals'
         && (
           <>
             <Header />
+            { shareMsg && (<p>Link copied!</p>) }
             {recData && recData.drinks
             && <RecCarousel type="meals" data={ recData } />}
             <h1>Recipe Details</h1>
@@ -136,14 +149,37 @@ export default function RecipeDetails() {
                 src={ data.meals[0].strYoutube }
                 title={ data.meals[0].strMeal }
               />
-
             </div>
             <Footer />
+            <div className="button-div">
+              <button
+                data-testid="share-btn"
+                onClick={ handleShareMsg }
+              >
+                Share
+                <img src={ shareIcon } alt="shareIcon" />
+              </button>
+              <button
+                onClick={ handleFavorite }
+                data-testid="favorite-btn"
+              >
+                Favorite
+              </button>
+              <Link to={ `/meals/${id}/in-progress` }>
+                <button
+                  id="start-recipe-btn"
+                  data-testid="start-recipe-btn"
+                >
+                  Start Recipe
+                </button>
+              </Link>
+            </div>
           </>)}
       {!loading && mealsOrDrinks === 'drinks'
         && (
           <>
             <Header />
+            { shareMsg && (<p>Link copied!</p>) }
             {recData && recData.meals
             && <RecCarousel type="drinks" data={ recData } />}
             <h1>Recipe Details</h1>
@@ -182,6 +218,29 @@ export default function RecipeDetails() {
               <h4 data-testid="instructions">{ data.drinks[0].strInstructions }</h4>
             </div>
             <Footer />
+            <div className="button-div">
+              <button
+                data-testid="share-btn"
+                onClick={ handleShareMsg }
+              >
+                Share
+                <img src={ shareIcon } alt="shareIcon" />
+              </button>
+              <button
+                onClick={ handleFavorite }
+                data-testid="favorite-btn"
+              >
+                Favorite
+              </button>
+              <Link to={ `/drinks/${id}/in-progress` }>
+                <button
+                  id="start-recipe-btn"
+                  data-testid="start-recipe-btn"
+                >
+                  Start Recipe
+                </button>
+              </Link>
+            </div>
           </>)}
     </div>
   );

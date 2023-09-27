@@ -24,9 +24,10 @@ export default function RecCarousel({ type, data }:any) {
     }
     return array;
   }
+
   const indexedData = insertIndex(cutData);
   const pairs = groupArrayIntoPairs(indexedData);
-  console.log(pairs);
+  // console.log(pairs);
 
   useEffect(() => {
     if (data) {

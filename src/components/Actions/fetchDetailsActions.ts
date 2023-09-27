@@ -1,4 +1,6 @@
-import { RootState, Dispatch } from '../Reducers/reducers';
+import { Action } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { RootState } from '../Reducers/reducers';
 import { FETCH_DETAILS_ERROR,
   FETCH_DETAILS_REQUEST, FETCH_DETAILS_SUCCESS } from '../../utils/type/Type';
 
@@ -19,7 +21,7 @@ const fetchDetailsSuccess = (food:any) => ({
 type GetState = () => RootState;
 
 export const fetchDetails = (type:string, id:string) => {
-  return async (dispatch: Dispatch, _getState:GetState) => {
+  return async (dispatch:ThunkDispatch<RootState, null, Action<string>>) => {
     dispatch(fetchDetailsRequest());
     try {
       let url = '';
