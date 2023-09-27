@@ -18,7 +18,14 @@ export default function RecCarousel({ type, data }:any) {
     return pairs;
   }
 
-  const pairs = groupArrayIntoPairs(cutData);
+  function insertIndex(array:any) {
+    for (let i = 0; i < array.length; i++) {
+      array[i].index = i;
+    }
+    return array;
+  }
+  const indexedData = insertIndex(cutData);
+  const pairs = groupArrayIntoPairs(indexedData);
   console.log(pairs);
 
   useEffect(() => {
@@ -38,11 +45,13 @@ export default function RecCarousel({ type, data }:any) {
   return (
     <div>
       <Carousel>
-        {!isLoading && pairs && pairs.map((pair: any[], index: number) => (
+        {!isLoading && type === 'meals'
+        && pairs && pairs.map((pair: any[], index: number) => (
           <Carousel.Item key={ index }>
             <div className="hstack gap-2 col-md-5 mx-auto">
               {pair.map((item: any) => (
                 <img
+                  data-testid={ `${item.index}-recommendation-card` }
                   key={ item.strDrink }
                   className="d-block w-50 mx-auto"
                   src={ item.strDrinkThumb }
@@ -51,8 +60,44 @@ export default function RecCarousel({ type, data }:any) {
               ))}
             </div>
             <Carousel.Caption>
-              <h3>{pair[0].strDrink}</h3>
-              <h3>{pair[1].strDrink}</h3>
+              <h3
+                data-testid={ `${pair[0].index}-recommendation-title` }
+              >
+                {pair[0].strDrink}
+              </h3>
+              <h3
+                data-testid={ `${pair[1].index}-recommendation-title` }
+              >
+                {pair[1].strDrink}
+              </h3>
+            </Carousel.Caption>
+          </Carousel.Item>
+        ))}
+        {!isLoading && type === 'drinks'
+        && pairs && pairs.map((pair: any[], index: number) => (
+          <Carousel.Item key={ index }>
+            <div className="hstack gap-2 col-md-5 mx-auto">
+              {pair.map((item: any) => (
+                <img
+                  data-testid={ `${item.index}-recommendation-card` }
+                  key={ item.strMeal }
+                  className="d-block w-50 mx-auto"
+                  src={ item.strMealThumb }
+                  alt={ item.strMeal }
+                />
+              ))}
+            </div>
+            <Carousel.Caption>
+              <h3
+                data-testid={ `${pair[0].index}-recommendation-title` }
+              >
+                {pair[0].strMeal}
+              </h3>
+              <h3
+                data-testid={ `${pair[1].index}-recommendation-title` }
+              >
+                {pair[1].strMeal}
+              </h3>
             </Carousel.Caption>
           </Carousel.Item>
         ))}

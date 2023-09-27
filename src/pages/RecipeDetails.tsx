@@ -94,7 +94,6 @@ export default function RecipeDetails() {
         && (
           <>
             <Header />
-            { console.log(recData.drinks) }
             {recData && recData.drinks
             && <RecCarousel type="meals" data={ recData } />}
             <h1>Recipe Details</h1>
@@ -145,6 +144,8 @@ export default function RecipeDetails() {
         && (
           <>
             <Header />
+            {recData && recData.meals
+            && <RecCarousel type="drinks" data={ recData } />}
             <h1>Recipe Details</h1>
             <div>
               <img
