@@ -9,7 +9,8 @@ function Profile() {
   const rawStorage = localStorage.getItem('user');
   let storage;
   if (rawStorage) storage = JSON.parse(rawStorage);
-  const user = storage.email;
+  let user;
+  if (storage && storage.email) user = storage.email;
   return (
     <>
       <div>
