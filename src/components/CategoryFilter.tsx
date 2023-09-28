@@ -31,9 +31,13 @@ function CategoryFilter({
         const response = await fetch(endpoint);
         const data = await response.json();
         console.log(data);
-        const firstFiveCategories = data[isCategory ? 'meals' : 'drinks'].slice(0, 5)
-          .map((category: any) => category.strCategory);
-        setCategories(firstFiveCategories);
+        const firstFiveCategories = data && data[isCategory ? 'meals' : 'drinks'];
+        if (firstFiveCategories) {
+          const slicedCategories = firstFiveCategories.slice(0, 5);
+          const categoryNames = slicedCategories.map((category: any) => category
+            .strCategory);
+          setCategories(categoryNames);
+        }
       } catch (error) {
         console.error('Erro ao buscar categorias:', error);
       }

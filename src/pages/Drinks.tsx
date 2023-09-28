@@ -51,7 +51,7 @@ export default function Drinks() {
       />
       <div>
         <h1>Drink Recipes</h1>
-        {drinks.slice(0, 12).map((drink, index) => {
+        {drinks && drinks.length && drinks.slice(0, 12).map((drink, index) => {
           return (
             <div key={ index } data-testid={ `${index}-recipe-card` }>
               <Link to={ `/drinks/${drink.idDrink}` }>
