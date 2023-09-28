@@ -132,6 +132,11 @@ export type RecipeListType = {
   drinks?: [],
 };
 
+export type MealsDrinksType = {
+  meals: Array<MealType>,
+  drinks: Array<DrinkType>
+};
+
 export const FETCH_FOOD_REQUEST = 'FETCH_FOOD_REQUEST';
 export const FETCH_FOOD_ERROR = 'FETCH_FOOD_ERROR';
 export const FETCH_FOOD_SUCCESS = 'FETCH_FOOD_SUCCESS';
