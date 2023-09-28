@@ -93,7 +93,7 @@ export const setExampleInProgress = () => {
   localStorage.setItem('inProgressRecipes', JSON.stringify(mealsAndDrinksEx));
 };
 
-export const handleInProgress = (mealsOrDrinks:string, id:string) => {
+export const handleInProgress = (id:string) => {
   const itemId = Number(id);
   const storedData = localStorage.getItem('inProgressRecipes');
   const inProgress: InProgressRecipeType = storedData ? JSON.parse(storedData) : [];

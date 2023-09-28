@@ -34,11 +34,11 @@ export default function RecipeDetails() {
   const mealsOrDrinks = location.pathname.replace(/^\/([^/]*).*$/, '$1').toString();
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [isInProgress, setIsInProgress] = useState(false);
-  setExampleInProgress();
+  setExampleInProgress(); // SOMENTE PARA TESTES APAGAR DEPOIS
   useEffect(() => {
     if (!loading && id) {
       handleFavorite();
-      setIsInProgress(handleInProgress(mealsOrDrinks, id));
+      setIsInProgress(handleInProgress(id));
     }
   }, [loading, id]);
 
