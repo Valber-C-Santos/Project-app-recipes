@@ -4,12 +4,16 @@ import thunk, { ThunkDispatch } from 'redux-thunk';
 import searchReducer from './searchReducer';
 import searchResultReducer from './searchResultReducer';
 import fetchAPIReducer from './fetchAPIReducer';
+import fetchDetailsReducer from './fetchDetailsReducer';
+import fetchRecReducer from './fetchRecReducer';
 import removeFavoriteRecipesReducer from './favoriteRecipeReducer';
 
 export const rootReducer = combineReducers({
   search: searchReducer,
   searchResults: searchResultReducer,
   fetchAPI: fetchAPIReducer,
+  fetchDetails: fetchDetailsReducer,
+  fetchRec: fetchRecReducer,
   removeFavoriteRecipe: removeFavoriteRecipesReducer,
 });
 

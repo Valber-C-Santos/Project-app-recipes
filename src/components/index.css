@@ -10,11 +10,31 @@ body {
 }
 
 .footer {
-  background-color: white;
   border-top: 1px solid black;
+  position: fixed;
+  width: 100%;
   bottom: 0;
   color: white;
   font-size: 25px;
+}
+
+.button-div {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
   position: fixed;
-  width: 100%;
+  bottom: 0;
+  right: 120px;
+  margin: 0px;
+}
+
+#start-recipe-btn {
+  right: 0;
+  bottom: 0;
+  font-size: 14px;
+  background-color: white;
+  border-top: 1px solid black;
+  color: white;
+  position: fixed;
 }

@@ -4,6 +4,7 @@ export type User = {
 };
 
 export type MealType = {
+  [key: string]: string | null;
   idMeal: string
   strMeal: string
   strDrinkAlternate: string
@@ -68,6 +69,7 @@ export type DrinksType = {
 };
 
 export type DrinkType = {
+  [key: string]: string | null;
   idDrink: string
   strDrink: string
   strDrinkAlternate: string
@@ -132,6 +134,25 @@ export type RecipeListType = {
   drinks?: [],
 };
 
+export type RecipeType = {
+  id: number;
+  type: string;
+  nationality: string;
+  category: string;
+  alcoholicOrNot: string;
+  name: string;
+  image: string;
+};
+
+export type InProgressRecipeType = {
+  drinks:[],
+  meals:[],
+};
+
+export type IngredientType = {
+  ingredient: string;
+  measure: string;
+
 export type MealsDrinksType = {
   meals: Array<MealType>,
   drinks: Array<DrinkType>
@@ -144,3 +165,15 @@ export const FETCH_FOOD_SUCCESS = 'FETCH_FOOD_SUCCESS';
 export const FETCH_DRINKS_REQUEST = 'FETCH_DRINKS_REQUEST';
 export const FETCH_DRINKS_ERROR = 'FETCH_DRINKS_ERROR';
 export const FETCH_DRINKS_SUCCESS = 'FETCH_DRINKS_SUCCESS';
+
+export const FETCH_DETAILS_REQUEST = 'FETCH_DETAILS_REQUEST';
+export const FETCH_DETAILS_ERROR = 'FETCH_DETAILS_ERROR';
+export const FETCH_DETAILS_SUCCESS = 'FETCH_DETAILS_SUCCESS';
+
+export const FETCH_RECF_REQUEST = 'FETCH_RECF_REQUEST';
+export const FETCH_RECF_ERROR = 'FETCH_RECF_ERROR';
+export const FETCH_RECF_SUCCESS = 'FETCH_RECF_SUCCESS';
+
+export const FETCH_RECD_REQUEST = 'FETCH_RECD_REQUEST';
+export const FETCH_RECD_ERROR = 'FETCH_RECD_ERROR';
+export const FETCH_RECD_SUCCESS = 'FETCH_RECD_SUCCESS';

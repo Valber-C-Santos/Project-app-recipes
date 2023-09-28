@@ -166,7 +166,7 @@ describe('Test search bar', () => {
     window.alert = jsdomAlert; // https://stackoverflow.com/questions/55088482/jest-not-implemented-window-alert
   });
 
-  test.only('if when just one item it redirects to details', async () => {
+  test('if when just one item it redirects to details', async () => {
     const { user } = renderWithRouterAndRedux(<App />, '/');
     expect(window.location.href).toBe('http://localhost:3000/');
     const emailElem = screen.getByRole('textbox', { name: /e-mail:/i });
