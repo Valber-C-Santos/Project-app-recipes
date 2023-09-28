@@ -6,6 +6,7 @@ import searchResultReducer from './searchResultReducer';
 import fetchAPIReducer from './fetchAPIReducer';
 import fetchDetailsReducer from './fetchDetailsReducer';
 import fetchRecReducer from './fetchRecReducer';
+import removeFavoriteRecipesReducer from './favoriteRecipeReducer';
 
 export const rootReducer = combineReducers({
   search: searchReducer,
@@ -13,6 +14,7 @@ export const rootReducer = combineReducers({
   fetchAPI: fetchAPIReducer,
   fetchDetails: fetchDetailsReducer,
   fetchRec: fetchRecReducer,
+  removeFavoriteRecipe: removeFavoriteRecipesReducer,
 });
 
 export const store = createStore(

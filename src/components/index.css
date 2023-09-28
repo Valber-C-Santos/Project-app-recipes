@@ -1,14 +1,14 @@
 body {
+  height: 1000px;
   margin: 0;
   padding: 0;
-  height: 1000px;
 }
- 
+
 .App {
-  color: #228b22;
+  color: forestgreen;
   text-align: center;
 }
- 
+
 .footer {
   border-top: 1px solid black;
   position: fixed;
@@ -30,8 +30,11 @@ body {
 }
 
 #start-recipe-btn {
-  position: fixed;
-  bottom: 0;
   right: 0;
+  bottom: 0;
   font-size: 14px;
+  background-color: white;
+  border-top: 1px solid black;
+  color: white;
+  position: fixed;
 }

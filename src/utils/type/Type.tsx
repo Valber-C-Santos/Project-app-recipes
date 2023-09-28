@@ -152,6 +152,10 @@ export type InProgressRecipeType = {
 export type IngredientType = {
   ingredient: string;
   measure: string;
+
+export type MealsDrinksType = {
+  meals: Array<MealType>,
+  drinks: Array<DrinkType>
 };
 
 export const FETCH_FOOD_REQUEST = 'FETCH_FOOD_REQUEST';
