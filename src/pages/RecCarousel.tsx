@@ -1,9 +1,6 @@
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Stack } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../components/Reducers/reducers';
 
 export default function RecCarousel({ type, data }:any) {
   const [cutData, setCutData] = useState([]);

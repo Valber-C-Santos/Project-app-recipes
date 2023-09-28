@@ -1,4 +1,5 @@
-import { DrinkType, MealType, RecipeType } from '../utils/type/Type';
+import { DrinkType, InProgressRecipeType,
+  MealType, RecipeType } from '../utils/type/Type';
 
 export const convertToRecipeFormat = (type: string, data:any): RecipeType | null => {
   let recipe: RecipeType | null = null;
@@ -81,4 +82,24 @@ export const searchRecipeById = (idToSearch: number): RecipeType | null => {
     }
   }
   return null;
+};
+
+const mealsAndDrinksEx = {
+  meals: { 52771: [] },
+  drinks: { 178319: [] },
+};
+
+export const setExampleInProgress = () => {
+  localStorage.setItem('inProgressRecipes', JSON.stringify(mealsAndDrinksEx));
+};
+
+export const handleInProgress = (mealsOrDrinks:string, id:string) => {
+  const itemId = Number(id);
+  const storedData = localStorage.getItem('inProgressRecipes');
+  const inProgress: InProgressRecipeType = storedData ? JSON.parse(storedData) : [];
+  if (inProgress && (inProgress.drinks[itemId] || inProgress.meals[itemId])) {
+    console.log('inProgress');
+    return true;
+  }
+  return false;
 };

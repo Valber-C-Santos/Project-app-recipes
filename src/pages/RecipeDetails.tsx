@@ -11,8 +11,11 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { convertToRecipeFormat,
-  filterDrinkIngr, filterMealIngr } from './RecipeDetailsFunctions';
+  filterDrinkIngr, filterMealIngr,
+  handleInProgress, setExampleInProgress } from './RecipeDetailsFunctions';
 import { RecipeType } from '../utils/type/Type';
+import IngrRender from '../components/RecipeDetails/IngrRender';
+import StartButton from '../components/RecipeDetails/StartButton';
 
 export default function RecipeDetails() {
   const [shareMsg, setShareMsg] = useState(false);
@@ -30,10 +33,14 @@ export default function RecipeDetails() {
   const recData = useSelector((state:RootState) => state.fetchRec.data);
   const mealsOrDrinks = location.pathname.replace(/^\/([^/]*).*$/, '$1').toString();
   const [isFirstLoad, setIsFirstLoad] = useState(true);
-
+  const [isInProgress, setIsInProgress] = useState(false);
+  setExampleInProgress();
   useEffect(() => {
-    if (!loading) handleFavorite();
-  }, [loading]);
+    if (!loading && id) {
+      handleFavorite();
+      setIsInProgress(handleInProgress(mealsOrDrinks, id));
+    }
+  }, [loading, id]);
 
   useEffect(() => {
     setLoading(true);
@@ -60,7 +67,7 @@ export default function RecipeDetails() {
     navigator.clipboard.writeText(window.location.href);
   };
 
-  function handleFavorite() {
+  const handleFavorite = () => {
     const itemId = Number(id);
     const storedData = localStorage.getItem('favoriteRecipes');
     const favorites: RecipeType[] = storedData ? JSON.parse(storedData) : [];
@@ -76,7 +83,7 @@ export default function RecipeDetails() {
     if (favorites.length > 0 && isFirstLoad) setIsFav(true);
     setIsFirstLoad(false);
     localStorage.setItem('favoriteRecipes', JSON.stringify(favorites));
-  }
+  };
 
   return (
     <div>
@@ -104,19 +111,7 @@ export default function RecipeDetails() {
               {mealIngr && (
                 <ul>
                   {mealIngr.map((ingr, index) => (
-                    <li
-                      data-testid={ `${index}-ingredient-name-and-measure` }
-                      key={ index }
-                    >
-                      <p>
-                        Ingredient:
-                        { ingr.ingredient }
-                      </p>
-                      <p>
-                        Measure:
-                        { ingr.measure }
-                      </p>
-                    </li>
+                    <IngrRender key={ index } ingr={ ingr } index={ index } />
                   ))}
                 </ul>
               )}
@@ -149,9 +144,7 @@ export default function RecipeDetails() {
                   />}
               </button>
               <Link to={ `/meals/${id}/in-progress` }>
-                <button id="start-recipe-btn" data-testid="start-recipe-btn">
-                  Start Recipe
-                </button>
+                <StartButton isInProgress={ isInProgress } />
               </Link>
             </div>
           </>)}
@@ -179,19 +172,7 @@ export default function RecipeDetails() {
               {drinkIngr && (
                 <ul>
                   {drinkIngr.map((ingr, index) => (
-                    <li
-                      data-testid={ `${index}-ingredient-name-and-measure` }
-                      key={ index }
-                    >
-                      <p>
-                        Ingredient:
-                        { ingr.ingredient }
-                      </p>
-                      <p>
-                        Measure:
-                        { ingr.measure }
-                      </p>
-                    </li>
+                    <IngrRender key={ index } ingr={ ingr } index={ index } />
                   ))}
                 </ul>
               )}
@@ -218,9 +199,7 @@ export default function RecipeDetails() {
                   />}
               </button>
               <Link to={ `/drinks/${id}/in-progress` }>
-                <button id="start-recipe-btn" data-testid="start-recipe-btn">
-                  Start Recipe
-                </button>
+                <StartButton isInProgress={ isInProgress } />
               </Link>
             </div>
           </>)}

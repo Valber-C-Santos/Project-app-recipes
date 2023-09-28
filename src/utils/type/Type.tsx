@@ -144,6 +144,16 @@ export type RecipeType = {
   image: string;
 };
 
+export type InProgressRecipeType = {
+  drinks:[],
+  meals:[],
+};
+
+export type IngredientType = {
+  ingredient: string;
+  measure: string;
+};
+
 export const FETCH_FOOD_REQUEST = 'FETCH_FOOD_REQUEST';
 export const FETCH_FOOD_ERROR = 'FETCH_FOOD_ERROR';
 export const FETCH_FOOD_SUCCESS = 'FETCH_FOOD_SUCCESS';
