@@ -6,13 +6,17 @@ function Profile() {
   const handleLogout = () => {
     localStorage.clear();
   };
+  const rawStorage = localStorage.getItem('user');
+  let storage;
+  if (rawStorage) storage = JSON.parse(rawStorage);
+  const user = storage.email;
   return (
     <>
       <div>
         <Header />
         <h2>Perfil</h2>
         <p data-testid="profile-email">
-          {localStorage.getItem('user')}
+          {user}
         </p>
         <Link
           to="/done-recipes"
