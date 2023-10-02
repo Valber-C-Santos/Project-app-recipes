@@ -24,17 +24,3 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin: 1px;
-  position: fixed;
-  right: 120px;
-}
-
-/* #start-recipe-btn {
-  bottom: 0;
-  right: 0;
-  background-color: white;
-  font-size: 14px;
-  border-top: 1px solid black;
-  color: white;
-  position: fixed;
-} */
