@@ -47,5 +47,5 @@ test('Testa Favorite Recipes sem LocalStorage', async () => {
   renderWithRouterAndRedux(<App />, '/favorite-recipes');
   expect(screen.getByTestId('page-title')).toBeInTheDocument();
   expect(screen.queryByTestId('1-horizontal-image')).not.toBeInTheDocument();
-  await waitFor(() => { expect(screen.getByTestId('filter-by-drink-btn')).toBeInTheDocument(); }, { timeout: 3000 });
+  await waitFor(() => { expect(screen.getByTestId('filter-by-drink-btn')).toBeInTheDocument(); }, { timeout: 2000 });
 });
