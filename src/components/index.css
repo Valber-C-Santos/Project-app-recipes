@@ -24,7 +24,3 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin: 0;
-  position: fixed;
-  right: 120px;
-}

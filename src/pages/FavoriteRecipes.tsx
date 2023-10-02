@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -18,7 +17,6 @@ export default function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
   const [copied, setCopied] = useState<number | null>(null);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const savedRecipes = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
@@ -40,18 +38,6 @@ export default function FavoriteRecipes() {
       favoriteRecipes.filter((list) => list.id !== id),
     ));
   };
-  // const filterByCategory = (category: string) => {
-  //   if (category === 'All') {
-  //     setFilteredRecipes(favoriteRecipes);
-  //   } else {
-  //     const filtered = favoriteRecipes.filter((recipe) => recipe.category === category);
-  //     setFilteredRecipes(filtered);
-  //   }
-  // };
-
-  // const handleRemoveFavorite = (recipeId: number) => {
-  //   dispatch(removeFavoriteRecipe(recipeId));
-  // };
 
   return (
     <div>
@@ -96,7 +82,7 @@ export default function FavoriteRecipes() {
                     src={ recipe.image }
                     alt={ recipe.name }
                     data-testid={ `${index}-horizontal-image` }
-                    style={ { width: '150px' } }
+                    style={ { maxWidth: '50px' } }
                   />
                 </Link>
                 <p data-testid={ `${index}-horizontal-top-text` }>
