@@ -28,14 +28,3 @@ body {
   position: fixed;
   right: 120px;
 }
-
-/* stylelint-disable-next-line selector-max-specificity */
-#start-recipe-btn {
-  background-color: white;
-  border-top: 1px solid black;
-  bottom: 0;
-  color: white;
-  font-size: 14px;
-  position: fixed;
-  right: 0;
-}
