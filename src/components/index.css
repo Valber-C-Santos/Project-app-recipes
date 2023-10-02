@@ -12,29 +12,29 @@ body {
 .footer {
   border-top: 1px solid black;
   position: fixed;
-  width: 100%;
   bottom: 0;
+  width: 100%;
   color: white;
   font-size: 25px;
 }
 
 .button-div {
   display: flex;
-  flex-direction: row;
   align-items: flex-end;
+  flex-direction: row;
   justify-content: flex-end;
-  position: fixed;
   bottom: 0;
-  right: 120px;
+  position: fixed;
   margin: 0px;
+  right: 120px;
 }
 
-#start-recipe-btn {
-  right: 0;
+/* #start-recipe-btn {
   bottom: 0;
-  font-size: 14px;
+  right: 0;
   background-color: white;
+  font-size: 14px;
   border-top: 1px solid black;
   color: white;
   position: fixed;
-}
+} */
