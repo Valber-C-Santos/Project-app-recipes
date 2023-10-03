@@ -11,7 +11,6 @@ import { store } from '../components/Reducers/reducers';
 import Drinks from '../pages/Drinks';
 import renderWithRouterAndRedux from '../components/Helpers/renderWithRouterWithRedux';
 import App from '../App';
-import { wait } from '@testing-library/user-event/dist/types/utils';
 
 const mockSearch = {
   data: {
@@ -121,14 +120,21 @@ describe('Test search bar', () => {
 
     await user.click(firstEl);
     await user.type(inputEl, 'chicken');
+    await waitFor(() => screen.queryByTestId('0-recipe-card') !== null);
     expect(inputEl).toHaveValue('chicken');
     expect(searchButtonEl).toBeInTheDocument();
-    // expect(mockFetch).toHaveBeenCalledTimes(1);
     await user.click(searchButtonEl);
+    // expect(mockFetch).toHaveBeenCalledTimes(3);
     // const recipeCard = await screen.findByTestId('0-recipe-card');
     // expect(recipeCard).toBeInTheDocument();
     await waitFor(() => expect(window.alert).toHaveBeenCalledTimes(1));
     mockAlert.mockRestore();
+  });
+
+  test('test recipeDetails page', async () => {
+    const { user } = renderWithRouterAndRedux(<App />, '/meals/52771');
+    const imageEl = screen.getByRole('img', { name: /spicy arrabiata penne/i });
+    expect(imageEl).toBeInTheDocument();
   });
 
   test('if returns correct food search values', async () => {
