@@ -10,7 +10,6 @@ function DoneRecipesCard({ value, index }: any) {
 
   const handleClickShare = async () => {
     await navigator.clipboard.writeText(url);
-    console.log(url);
 
     setCompyMessage('Link copied!');
     setTimeout(() => {
