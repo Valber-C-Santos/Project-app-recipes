@@ -19,11 +19,11 @@ function SearchBar() {
   const dispatch:Dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(recipeList.data);
+    // console.log(recipeList.data);
 
     if (recipeList.data.meals && recipeList.data.meals.length === 1) {
       const mealID = recipeList.data.meals[0].idMeal;
-      console.log('alo');
+      // console.log('alo');
 
       navigate(`/meals/${mealID}`);
     }

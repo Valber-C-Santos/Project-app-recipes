@@ -1,11 +1,11 @@
 import { AnyAction } from 'redux';
 import {
-  FETCH_FOOD_REQUEST,
-  FETCH_FOOD_SUCCESS,
-  FETCH_FOOD_ERROR,
-  // FETCH_DRINKS_REQUEST,
-  FETCH_DRINKS_SUCCESS,
-  // FETCH_DRINKS_ERROR,
+  FETCH_RECF_REQUEST,
+  FETCH_RECF_SUCCESS,
+  FETCH_RECF_ERROR,
+  // FETCH_RECD_REQUEST,
+  FETCH_RECD_SUCCESS,
+  // FETCH_RECD_ERROR,
 } from '../../utils/type/Type';
 
 const INITIAL_STATE = {
@@ -13,18 +13,18 @@ const INITIAL_STATE = {
   data: [],
 };
 
-const fetchAPIReducer = (state = INITIAL_STATE, action:AnyAction) => {
+const fetchRecReducer = (state = INITIAL_STATE, action:AnyAction) => {
   switch (action.type) {
-    case FETCH_FOOD_REQUEST: return {
+    case FETCH_RECF_REQUEST: return {
       ...state,
       loading: true,
     };
-    case FETCH_FOOD_SUCCESS: return {
+    case FETCH_RECF_SUCCESS: return {
       ...state,
       loading: false,
       data: action.payload,
     };
-    case FETCH_FOOD_ERROR: return {
+    case FETCH_RECF_ERROR: return {
       ...state,
       loading: false,
     };
@@ -32,7 +32,7 @@ const fetchAPIReducer = (state = INITIAL_STATE, action:AnyAction) => {
     //   ...state,
     //   loading: true,
     // };
-    case FETCH_DRINKS_SUCCESS:
+    case FETCH_RECD_SUCCESS:
       return {
         ...state,
         data: action.payload,
@@ -47,4 +47,4 @@ const fetchAPIReducer = (state = INITIAL_STATE, action:AnyAction) => {
   }
 };
 
-export default fetchAPIReducer;
+export default fetchRecReducer;
