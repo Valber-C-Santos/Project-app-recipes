@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 
 function DoneRecipesCard({ value, index }: any) {
@@ -21,12 +21,16 @@ function DoneRecipesCard({ value, index }: any) {
   if (type === 'meal') {
     return (
       <div>
-        <Link to={ url }>
-          <img src={ image } alt="" data-testid={ `${index}-horizontal-image` } />
-        </Link>
-        <Link to={ url }>
+        <NavLink to={ url }>
+          <img
+            className="card-images"
+            src={ image }
+            alt=""
+            data-testid={ `${index}-horizontal-image` }
+          />
+
           <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
-        </Link>
+        </NavLink>
         {compyMessage === 'Link copied!' ? <p>Link copied!</p> : <p />}
 
         <p data-testid={ `${index}-horizontal-top-text` }>
@@ -53,7 +57,12 @@ function DoneRecipesCard({ value, index }: any) {
   return (
     <div>
       <Link to={ url }>
-        <img src={ image } alt="" data-testid={ `${index}-horizontal-image` } />
+        <img
+          className="card-images"
+          src={ image }
+          alt=""
+          data-testid={ `${index}-horizontal-image` }
+        />
         <h2 data-testid={ `${index}-horizontal-name` }>{name}</h2>
       </Link>
 

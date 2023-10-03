@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import DoneRecipesCard from './DoneRecipesFoodCard';
-// import iconDrink from './DoneRecipesFoodCard';
-// import iconAll from './DoneRecipesFoodCard';
 
 import { RecipesDoneFIlterType } from '../utils/type/Type';
 
