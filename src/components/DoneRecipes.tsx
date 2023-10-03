@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DoneRecipesCard from './DoneRecipesFoodCard';
 
-import { RecipesDoneFIlterType } from '../utils/type/Type';
+export type RecipesDoneFilterType = 'All' | 'meal' | 'drink';
 
 function DoneRecipes() {
   const [recipesList, setRecipesList] = useState<any>();
@@ -18,7 +18,7 @@ function DoneRecipes() {
     retornaValorStorage();
   }, []);
 
-  function handleClickFilter(value:RecipesDoneFIlterType) {
+  function handleClickFilter(value:RecipesDoneFilterType) {
     if (value !== 'All' && recipesList !== null) {
       const newValues = recipesList.filter((item:any) => item.type === value);
       setUseRecipeList(newValues);

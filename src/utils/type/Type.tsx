@@ -121,24 +121,6 @@ export type ReduxState = {
   search: { searchInput:string };
 };
 
-export type RecipeCardType = {
-  index: string;
-  img: string;
-  name: string;
-};
-
-export type RecipeListType = {
-  meals?: [],
-  drinks?: [],
-};
-
-export type RecipesDoneType = {
-  value:{ index: string,
-    tagName: string }
-};
-
-export type RecipesDoneFIlterType = 'All' | 'meal' | 'drink';
-
 export const FETCH_FOOD_REQUEST = 'FETCH_FOOD_REQUEST';
 export const FETCH_FOOD_ERROR = 'FETCH_FOOD_ERROR';
 export const FETCH_FOOD_SUCCESS = 'FETCH_FOOD_SUCCESS';
