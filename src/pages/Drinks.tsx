@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header/index';
 import { DrinkType } from '../utils/type/Type';
 import CategoryFilter from '../components/CategoryFilter';
 import Footer from '../components/Footer';
+import { RootState } from '../components/Reducers/reducers';
 
 export default function Drinks() {
   const [drinks, setDrinks] = useState<DrinkType[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [isFilterActive, setIsFilterActive] = useState(false);
+  const searchTerm = useSelector((state:RootState) => state.search.searchInput);
 
   const clearFilters = () => {
     setSelectedCategory('');
@@ -51,7 +54,8 @@ export default function Drinks() {
       />
       <div>
         <h1>Drink Recipes</h1>
-        {drinks && drinks.length && drinks.slice(0, 12).map((drink, index) => {
+        {searchTerm === ''
+        && drinks && drinks.length && drinks.slice(0, 12).map((drink, index) => {
           return (
             <div key={ index } data-testid={ `${index}-recipe-card` }>
               <Link to={ `/drinks/${drink.idDrink}` }>

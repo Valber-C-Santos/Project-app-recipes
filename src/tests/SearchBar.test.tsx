@@ -1,4 +1,4 @@
-import { vi } from 'vitest';
+import { test, vi } from 'vitest';
 import { fireEvent, screen, waitFor } from '@testing-library/dom';
 import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
@@ -11,6 +11,7 @@ import { store } from '../components/Reducers/reducers';
 import Drinks from '../pages/Drinks';
 import renderWithRouterAndRedux from '../components/Helpers/renderWithRouterWithRedux';
 import App from '../App';
+import { wait } from '@testing-library/user-event/dist/types/utils';
 
 const mockSearch = {
   data: {
@@ -80,6 +81,7 @@ const INITIAL_STATE = {
   fetchAPI: { loading: false, data: [] },
 };
 const SEARCH_BUTTON_ID = 'exec-search-btn';
+const SEARCH_INPUT_ID = 'search-input';
 
 describe('Test search bar', () => {
   afterEach(() => {
@@ -98,6 +100,37 @@ describe('Test search bar', () => {
     expect(nameEl).toBeInTheDocument();
     expect(firstEl).toBeInTheDocument();
   });
+  test('if returns alert', async () => {
+    const fetchResolvedValue = {
+      json: async () => mockSearch,
+    } as Response;
+
+    const mockFetch = vi.spyOn(global, 'fetch')
+      .mockResolvedValue(fetchResolvedValue);
+
+    const mockAlert = vi.spyOn(window, 'alert').mockImplementation(() => {});
+    const { user } = renderWithRouterAndRedux(<App />, '/meals');
+
+    const searchButtonEl = screen.getByTestId(SEARCH_BUTTON_ID);
+    const showSearchEl = screen.getByTestId('button-search');
+    const firstEl = screen.getByText(/first/i);
+    const nameEl = screen.getByText(/name/i);
+    await user.click(firstEl);
+    await user.click(showSearchEl);
+    const inputEl = await screen.findByTestId(SEARCH_INPUT_ID);
+
+    await user.click(firstEl);
+    await user.type(inputEl, 'chicken');
+    expect(inputEl).toHaveValue('chicken');
+    expect(searchButtonEl).toBeInTheDocument();
+    // expect(mockFetch).toHaveBeenCalledTimes(1);
+    await user.click(searchButtonEl);
+    // const recipeCard = await screen.findByTestId('0-recipe-card');
+    // expect(recipeCard).toBeInTheDocument();
+    await waitFor(() => expect(window.alert).toHaveBeenCalledTimes(1));
+    mockAlert.mockRestore();
+  });
+
   test('if returns correct food search values', async () => {
     const jsdomAlert = window.alert; // https://stackoverflow.com/questions/55088482/jest-not-implemented-window-alert
     window.alert = () => {};
@@ -108,7 +141,7 @@ describe('Test search bar', () => {
     const mockFetch = vi.spyOn(global, 'fetch')
       .mockResolvedValue(fetchResolvedValue);
 
-    const { user } = renderWithRouterAndRedux(<Meals />, '/meals', INITIAL_STATE);
+    const { user } = renderWithRouterAndRedux(<Meals />, '/meals');
 
     const searchButtonEl = screen.getByTestId(SEARCH_BUTTON_ID);
     const showSearchEl = screen.getByRole('button', { name: /search icon/i });
@@ -118,7 +151,7 @@ describe('Test search bar', () => {
     await user.click(firstEl);
     await user.click(showSearchEl);
 
-    const inputEl = await screen.findByTestId('search-input');
+    const inputEl = await screen.findByTestId(SEARCH_INPUT_ID);
 
     await user.type(inputEl, 'c');
     expect(inputEl).toHaveValue('c');
@@ -184,7 +217,7 @@ describe('Test search bar', () => {
     const showSearchEl = screen.getByRole('button', { name: /search icon/i });
     const nameEl = screen.getByText(/name/i);
     fireEvent.click(showSearchEl);
-    const inputEl = await screen.findByTestId('search-input');
+    const inputEl = await screen.findByTestId(SEARCH_INPUT_ID);
 
     fireEvent.click(nameEl);
     // await user.clear(inputEl);
