@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { MealType } from '../utils/type/Type';
 import CategoryFilter from '../components/CategoryFilter';
 import Footer from '../components/Footer';
+import { RootState } from '../components/Reducers/reducers';
 
 export default function Meals() {
   const [meals, setMeals] = useState<MealType[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [isFilterActive, setIsFilterActive] = useState(false);
+  const searchTerm = useSelector((state:RootState) => state.search.searchInput);
 
   const clearFilters = () => {
     setSelectedCategory('');
@@ -55,7 +58,8 @@ export default function Meals() {
       />
       <div>
         <h1>Meal Recipes</h1>
-        {meals && meals.length > 0 && meals.slice(0, 12).map((meal, index) => {
+        {searchTerm === ''
+          && meals && meals.length > 0 && meals.slice(0, 12).map((meal, index) => {
           return (
             <div key={ index } data-testid={ `${index}-recipe-card` }>
               <Link to={ `/meals/${meal.idMeal}` }>
